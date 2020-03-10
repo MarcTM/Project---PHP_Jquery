@@ -1,5 +1,5 @@
-$(document).ready(function () {
 
+function firstslot(){
     $.ajax({ 
         type: "GET",
         dataType: "json",
@@ -16,9 +16,10 @@ $(document).ready(function () {
     .fail(function( jqXHR, textStatus, errorThrown ) {
             console.log( "La solicitud ha fallado: " +  textStatus);
     });
+}
 
 
-
+function secondslot(){
     $("#province").on("change", function () {
         var province = $(this).val();
 
@@ -38,9 +39,10 @@ $(document).ready(function () {
             });
         });
     });
+}
 
 
-
+function autoc(){
     $("#autocom").on("keyup", function () {
         var auto=$(this).val();
         var shop=$("#shop").val();
@@ -68,10 +70,14 @@ $(document).ready(function () {
             // });
         });
     });
+}
 
 
-    
+function searchbutton(){
     $("#searchlist").on("click", function (){
+        localStorage.removeItem('carousel');
+        localStorage.removeItem('category');
+        
         var province = $("#province").val();
         var shop=$("#shop").val();
         var auto=$("#autocom").val();
@@ -91,5 +97,14 @@ $(document).ready(function () {
             window.location.href = 'index.php?page=controller_shop&op=list';
         }
     });
+}
+
+
+$(document).ready(function () {
+
+    firstslot();
+    secondslot();
+    autoc();
+    searchbutton();
 
 });

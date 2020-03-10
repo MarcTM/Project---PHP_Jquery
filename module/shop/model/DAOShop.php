@@ -7,8 +7,8 @@
 
 	class DAOShop{
 
-		function select_all_product(){
-			$sql = "SELECT * FROM products ORDER BY views DESC";
+		function select_all_product($offset){
+			$sql = "SELECT * FROM products ORDER BY views DESC LIMIT 4 OFFSET $offset";
 			
 			$conexion = connect::con();
 
@@ -22,8 +22,8 @@
 		}
 
 		
-		function select_cat($cat){
-			$sql = "SELECT * FROM products WHERE product='$cat' ORDER BY views DESC";
+		function select_cat($cat, $offset){
+			$sql = "SELECT * FROM products WHERE product='$cat' ORDER BY views DESC LIMIT 4 OFFSET $offset";
 			
 			$conexion = connect::con();
 
@@ -37,18 +37,18 @@
 		}
 
 
-		function select_car($car){
+		function select_car($car, $offset){
 			if($car==='bcaas'){
-				$sql = "SELECT * FROM products WHERE product='Bcaa' ORDER BY views DESC";
+				$sql = "SELECT * FROM products WHERE product='Bcaa' ORDER BY views DESC LIMIT 4 OFFSET $offset";
 
 			}else if($car==='packs'){
-				$sql = "SELECT * FROM products WHERE product='Vitamin' ORDER BY views DESC";
+				$sql = "SELECT * FROM products WHERE product='Vitamin' ORDER BY views DESC LIMIT 4 OFFSET $offset";
 
 			}else if($car==='liquidacion'){
-				$sql = "SELECT * FROM products WHERE product='Mass_gainer' ORDER BY views DESC";
+				$sql = "SELECT * FROM products WHERE product='Mass_gainer' ORDER BY views DESC LIMIT 4 OFFSET $offset";
 
 			}else if($car==='dto'){
-				$sql = "SELECT * FROM products WHERE product='Creatine' ORDER BY views DESC";
+				$sql = "SELECT * FROM products WHERE product='Creatine' ORDER BY views DESC LIMIT 4 OFFSET $offset";
 
 			}
 
@@ -65,8 +65,8 @@
 
 
 
-		function select_search($province, $shop, $product){
-			$sql = "SELECT p.* FROM products p, shops s WHERE p.cod_shop = s.cod_shop AND s.city = '$province' AND s.name = '$shop' AND p.product = '$product'";
+		function select_search($province, $shop, $product, $offset){
+			$sql = "SELECT p.* FROM products p, shops s WHERE p.cod_shop = s.cod_shop AND s.city = '$province' AND s.name = '$shop' AND p.product = '$product' LIMIT 4 OFFSET $offset";
 			
 			$conexion = connect::con();
 

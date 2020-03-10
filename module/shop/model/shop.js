@@ -1,54 +1,364 @@
+///////////////////////
+        ////MAPS
+//////////////////////
+function call_fodemap() {
+
+    var script = document.createElement('script');
+    script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAjPEcsq5RMcnRRGGclOQJiNXgCK_pCPn8&callback=fodemap";
+    script.async;
+    script.defer;
+    document.getElementsByTagName('script')[0].parentNode.appendChild(script);
+
+}
+
+
+function fodemap() {
+
+    $.ajax({
+        type: "GET",
+        dataType: "JSON",
+        url: "module/shop/controller/controller_shop.php?op=maps",
+    })
+    .done(function( data, textStatus, jqXHR ) {
+        // console.log(data);
+        var markers = [];
+
+        function initialize() {
+        
+            var map = new google.maps.Map(document.getElementById('mapcat'), {
+                zoom: 7,
+                center: new google.maps.LatLng(-33, 150),
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            });
+        
+            var infowindow = new google.maps.InfoWindow();
+        
+            for (var i = 0; i < data.length; i++) {
+        
+                var newMarker = new google.maps.Marker({
+                    position: new google.maps.LatLng(data[i].latitude, data[i].longitude),
+                    map: map,
+                    title: data[i].name
+                });
+        
+                google.maps.event.addListener(newMarker, 'click', (function (newMarker, i) {
+                    return function () {
+                        infowindow.setContent(data[i].name);
+                        infowindow.open(map, newMarker);
+                    }
+                })(newMarker, i));
+        
+                markers.push(newMarker);
+            }
+        }
+        
+        initialize();
+
+     })
+     .fail(function( data, textStatus, jqXHR ) {
+         console.log("FAIL: "+data);
+     })
+}
+
+
+
 
 ///////////////////////
         ////AJAXFORSEARCH
 //////////////////////
-function ajaxForSearch(curl) {
-    var url=curl;
-    $.ajax({
-       type: "GET",
-       dataType: "json",
-       url:url,
-   })
-   .done(function( data, textStatus, jqXHR ) {
-       console.log(data);
-      if(data.length==0 || data ==='error'){
-           $('.centered').empty();
-           $('<div><h3>Su búsqueda no dió resultados.</h3></div>').attr('id','list').appendTo('.centered');
-      }else{
-           $('.centered').empty();
+function ajaxForSearch(method) {
+   switch (method){
+        
+        case "cat":
+            var cat = localStorage.getItem('category');
 
-           var shop="";
-           for (var i=0; i<data.length; i++ ){
-            shop += '<div class="col-lg-4"><img class="img-responsive" id="'+data[i].idproduct+'" src="'+data[i].img+'"/><p>'+data[i].product+' - '+data[i].kg+'KG<br>'+data[i].brand+'<br>'+data[i].price+'€</p></div>'
+            if (!localStorage.getItem('offset')){
+                var offset = 0;
+                localStorage.setItem('offset', offset);
+            }else{
+                var offset = localStorage.getItem('offset');
             }
+            console.log(localStorage.getItem('offset'));
 
-            $('.centered').html(
-                shop
-            );
+            $.ajax({
+            type: "GET",
+            dataType: "json",
+            url:"module/shop/controller/controller_shop.php?op=prods_select&name="+cat+"&offset="+offset,
+            })
+            .done(function( data, textStatus, jqXHR ) {
+                    console.log(data);
+                    if(data.length==0 || data ==='error'){
+                        $('.centered').empty();
+                        $('<div><h3>Su búsqueda no dió resultados.</h3></div>').attr('id','list').appendTo('.centered');
+                    }else{
+                        $('.centered').empty();
+                
+                        var shop="";
+                        for (var i=0; i<data.length; i++ ){
+                            shop += '<div class="col-lg-4"><img class="img-responsive" id="'+data[i].idproduct+'" src="'+data[i].img+'"/><p>'+data[i].product+' - '+data[i].kg+'KG<br>'+data[i].brand+'<br>'+data[i].price+'€</p></div>'
+                            }
+                
+                            $('.centered').html(
+                                shop
+                            );
 
-            $(".pagination").bootpag({
-                total: 2,
-                page: 1,
-                maxVisible: 4,
-                next: 'NEXT',
-                prev: 'PREV'
-            }).on("page", function (e, num) {
-                console.log(num);
-                if (num == 1){
-                    offset = 0;
-                }else if(num === 2){
-                    offset = 4;
-                }
-                e.preventDefault();
-                $(".centered").load("modules/products/controller/controller_products.class.php", {'page_num': num});
-            });
-       }
-   })
-   .fail(function( data, textStatus, jqXHR ) {
-       console.log("FAIL: "+data);
-   })
+                            if(!localStorage.getItem('page')){
+                                var page = 1;
+                            }else{
+                                var page = localStorage.getItem('page');
+                            }
+                
+                            $(".pagination").bootpag({
+                                total: 2,
+                                page: page,
+                                maxVisible: 4,
+                                next: 'NEXT',
+                                prev: 'PREV'
+                            }).on("page", function (e, num) {
+                                page = num;
+                                localStorage.setItem('page', page);
+                                console.log(num);
+                                if (num == 1){
+                                    offset = 0;
+                                    localStorage.setItem('offset', offset)
+                                }else if(num === 2){
+                                    offset = 4;
+                                    localStorage.setItem('offset', offset)
+                                }
+                                e.preventDefault();
+                                ajaxForSearch("cat");
+                            });
+                    }
+                })
+                .fail(function( data, textStatus, jqXHR ) {
+                    console.log("FAIL: "+data);
+                })
+
+                // localStorage.removeItem('category');
+        break;
+    
+        case "searchbar":
+            var province=localStorage.getItem('province');
+            var shop=localStorage.getItem('shop');
+            var auto=localStorage.getItem('val');
+
+            if (!localStorage.getItem('offset')){
+                var offset = 0;
+                localStorage.setItem('offset', offset);
+            }else{
+                var offset = localStorage.getItem('offset');
+            }
+            console.log(localStorage.getItem('offset'));
+
+            $.ajax({
+            type: "GET",
+            dataType: "json",
+            url:"module/shop/controller/controller_shop.php?op=search&province="+province+"&shop="+shop+"&prod="+auto+"&offset="+offset,
+            })
+            .done(function( data, textStatus, jqXHR ) {
+                    console.log(data);
+                    if(data.length==0 || data ==='error'){
+                        $('.centered').empty();
+                        $('<div><h3>Su búsqueda no dió resultados.</h3></div>').attr('id','list').appendTo('.centered');
+                    }else{
+                        $('.centered').empty();
+                
+                        var shop="";
+                        for (var i=0; i<data.length; i++ ){
+                            shop += '<div class="col-lg-4"><img class="img-responsive" id="'+data[i].idproduct+'" src="'+data[i].img+'"/><p>'+data[i].product+' - '+data[i].kg+'KG<br>'+data[i].brand+'<br>'+data[i].price+'€</p></div>'
+                            }
+                
+                            $('.centered').html(
+                                shop
+                            );
+
+                            if(!localStorage.getItem('page')){
+                                var page = 1;
+                            }else{
+                                var page = localStorage.getItem('page');
+                            }
+                
+                            $(".pagination").bootpag({
+                                total: 2,
+                                page: page,
+                                maxVisible: 4,
+                                next: 'NEXT',
+                                prev: 'PREV'
+                            }).on("page", function (e, num) {
+                                page = num;
+                                localStorage.setItem('page', page);
+                                console.log(num);
+                                if (num == 1){
+                                    offset = 0;
+                                    localStorage.setItem('offset', offset)
+                                }else if(num === 2){
+                                    offset = 4;
+                                    localStorage.setItem('offset', offset)
+                                }
+                                e.preventDefault();
+                                ajaxForSearch("searchbar");
+                            });
+                    }
+                })
+                .fail(function( data, textStatus, jqXHR ) {
+                    console.log("FAIL: "+data);
+                })
+
+                // localStorage.removeItem('province');
+                // localStorage.removeItem('shop');
+                // localStorage.removeItem('val');
+        break;
+
+        case "carousel":
+            var car=localStorage.getItem('carousel');
+
+            if (!localStorage.getItem('offset')){
+                var offset = 0;
+                localStorage.setItem('offset', offset);
+            }else{
+                var offset = localStorage.getItem('offset');
+            }
+            console.log(localStorage.getItem('offset'));
+
+            $.ajax({
+            type: "GET",
+            dataType: "json",
+            url:"module/shop/controller/controller_shop.php?op=fromcarousel&name="+car+"&offset="+offset,
+            })
+            .done(function( data, textStatus, jqXHR ) {
+                    console.log(data);
+                    if(data.length==0 || data ==='error'){
+                        $('.centered').empty();
+                        $('<div><h3>Su búsqueda no dió resultados.</h3></div>').attr('id','list').appendTo('.centered');
+                    }else{
+                        $('.centered').empty();
+                
+                        var shop="";
+                        for (var i=0; i<data.length; i++ ){
+                            shop += '<div class="col-lg-4"><img class="img-responsive" id="'+data[i].idproduct+'" src="'+data[i].img+'"/><p>'+data[i].product+' - '+data[i].kg+'KG<br>'+data[i].brand+'<br>'+data[i].price+'€</p></div>'
+                            }
+                
+                            $('.centered').html(
+                                shop
+                            );
+
+                            if(!localStorage.getItem('page')){
+                                var page = 1;
+                            }else{
+                                var page = localStorage.getItem('page');
+                            }
+                
+                            $(".pagination").bootpag({
+                                total: 2,
+                                page: page,
+                                maxVisible: 4,
+                                next: 'NEXT',
+                                prev: 'PREV'
+                            }).on("page", function (e, num) {
+                                page = num;
+                                localStorage.setItem('page', page);
+                                console.log(num);
+                                if (num == 1){
+                                    offset = 0;
+                                    localStorage.setItem('offset', offset)
+                                }else if(num === 2){
+                                    offset = 4;
+                                    localStorage.setItem('offset', offset)
+                                }
+                                e.preventDefault();
+                                ajaxForSearch("carousel");
+                            });
+                    }
+                })
+                .fail(function( data, textStatus, jqXHR ) {
+                    console.log("FAIL: "+data);
+                })
+
+                window.addEventListener('locationchange', function(){
+                    localStorage.removeItem('carousel');
+                })
+                // localStorage.removeItem('carousel');
+        break;
+
+        case "normal":
+            // var location = window.location.href;
+            // if (location === "http://localhost/MARC%20PROJECT/index.php?page=controller_shop&op=list"){
+            //     localStorage.removeItem('carousel');
+            //     localStorage.removeItem('category');
+            //     localStorage.removeItem('province');
+            //     localStorage.removeItem('shop');
+            //     localStorage.removeItem('val');
+            // }else{
+            //     console.log("no");
+            // }
+
+            if (!localStorage.getItem('offset')){
+                var offset = 0;
+                localStorage.setItem('offset', offset);
+            }else{
+                var offset = localStorage.getItem('offset');
+            }
+            console.log(localStorage.getItem('offset'));
+
+            $.ajax({
+                type: "GET",
+                dataType: "json",
+                url:"module/shop/controller/controller_shop.php?op=prods&offset="+offset,
+                })
+                .done(function( data, textStatus, jqXHR ) {
+                        console.log(data);
+                        if(data.length==0 || data ==='error'){
+                            $('.centered').empty();
+                            $('<div><h3>Su búsqueda no dió resultados.</h3></div>').attr('id','list').appendTo('.centered');
+                        }else{
+                            $('.centered').empty();
+                    
+                            var shop="";
+                            for (var i=0; i<data.length; i++ ){
+                                shop += '<div class="col-lg-4"><img class="img-responsive" id="'+data[i].idproduct+'" src="'+data[i].img+'"/><p>'+data[i].product+' - '+data[i].kg+'KG<br>'+data[i].brand+'<br>'+data[i].price+'€</p></div>'
+                                }
+                    
+                                $('.centered').html(
+                                    shop
+                                );
+                    
+                                if(!localStorage.getItem('page')){
+                                    var page = 1;
+                                }else{
+                                    var page = localStorage.getItem('page');
+                                }
+
+                                $(".pagination").bootpag({
+                                    total: 2,
+                                    page: page,
+                                    maxVisible: 4,
+                                    next: 'NEXT',
+                                    prev: 'PREV'
+                                }).on("page", function (e, num) {
+                                    page = num;
+                                    localStorage.setItem('page', page);
+                                    console.log(num);
+                                    if (num == 1){
+                                        offset = 0;
+                                        localStorage.setItem('offset', offset)
+                                    }else if(num === 2){
+                                        offset = 4;
+                                        localStorage.setItem('offset', offset)
+                                    }
+                                    e.preventDefault();
+                                    ajaxForSearch("normal");
+                                });
+                        }
+                    })
+                    .fail(function( data, textStatus, jqXHR ) {
+                        console.log("FAIL: "+data);
+                    })
+
+                    setfiltersnormal();
+                    filtersnormal();
+        break;
+   }
 }
-
 
 
 ///////////////////////
@@ -60,55 +370,31 @@ function redirect_page() {
     var car=localStorage.getItem('carousel');
 
     if (cat){
-        search();
-
+        localStorage.removeItem('offset');
+        localStorage.removeItem('page');
+        ajaxForSearch("cat");
     }else if (province){
-        searchbar();
-
+        localStorage.removeItem('offset');
+        localStorage.removeItem('page');
+        ajaxForSearch("searchbar");
     }else if (car){
-        fromcarousel();
-
+        localStorage.removeItem('offset');
+        localStorage.removeItem('page');
+        ajaxForSearch("carousel");
     }else{
-        ajaxForSearch("module/shop/controller/controller_shop.php?op=prods");
-
+        localStorage.removeItem('offset');
+        localStorage.removeItem('page');
+        ajaxForSearch("normal");
     }
 }
 
 ///////////////////////
         ////CATEGORIES
 //////////////////////
-function search() {
-    var cat=localStorage.getItem('category');
+function fromcategory() {
 
-
-    ajaxForSearch("module/shop/controller/controller_shop.php?op=prods_select&name="+cat);
     localStorage.removeItem('category');
-}
-
-///////////////////////
-        ////SEARCH
-//////////////////////
-function searchbar() {
-    var province=localStorage.getItem('province');
-    var shop=localStorage.getItem('shop');
-    var auto=localStorage.getItem('val');
-
-
-    ajaxForSearch("module/shop/controller/controller_shop.php?op=search&province="+province+"&shop="+shop+"&prod="+auto);
-    localStorage.removeItem('province');
-    localStorage.removeItem('shop');
-    localStorage.removeItem('val');
-}
-
-///////////////////////
-        ////CAROUSEL
-//////////////////////
-function fromcarousel() {
-    var car=localStorage.getItem('carousel');
-
-
-    ajaxForSearch("module/shop/controller/controller_shop.php?op=fromcarousel&name="+car);
-    localStorage.removeItem('carousel');
+    
 }
 
 
@@ -129,6 +415,7 @@ function read_prod() {
             url: "module/shop/controller/controller_shop.php?op=read_modal&modal=" + id,
         })
          .done(function(data) {
+                $('.pagination').empty();
                  $('.ali').empty();
                  $('.filters_shop').empty();
                  
@@ -170,11 +457,8 @@ function read_prod() {
         ////FILTERS
 //////////////////////
 
-///////////////////////
-        ////PINTAR FILTERS
-//////////////////////
-function setfilters() {
-    $('.filters_shop').append(
+function setfiltersnormal() {
+    $('.filters_shop').html(
         '<form name="selfilters" class="filtering">'+
         '<div class="fil">'+
         '<b>Product</b><br>'+
@@ -203,11 +487,7 @@ function setfilters() {
     )
 }
 
-
-///////////////////////
-        ////USE FILTERS
-//////////////////////
-function filters() {
+function filtersnormal() {
     var checks = "";
     var count = 0;
 
@@ -399,77 +679,22 @@ function envia($checks, $count) {
 
 
 
-///////////////////////
-        ////MAPS
-//////////////////////
-function call_fodemap() {
-
-    var script = document.createElement('script');
-    script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAjPEcsq5RMcnRRGGclOQJiNXgCK_pCPn8&callback=fodemap";
-    script.async;
-    script.defer;
-    document.getElementsByTagName('script')[0].parentNode.appendChild(script);
-
-}
-
-
-function fodemap() {
-
-    $.ajax({
-        type: "GET",
-        dataType: "JSON",
-        url: "module/shop/controller/controller_shop.php?op=maps",
-    })
-    .done(function( data, textStatus, jqXHR ) {
-        // console.log(data);
-        var markers = [];
-
-        function initialize() {
-        
-            var map = new google.maps.Map(document.getElementById('mapcat'), {
-                zoom: 7,
-                center: new google.maps.LatLng(-33, 150),
-                mapTypeId: google.maps.MapTypeId.ROADMAP
-            });
-        
-            var infowindow = new google.maps.InfoWindow();
-        
-            for (var i = 0; i < data.length; i++) {
-        
-                var newMarker = new google.maps.Marker({
-                    position: new google.maps.LatLng(data[i].latitude, data[i].longitude),
-                    map: map,
-                    title: data[i].name
-                });
-        
-                google.maps.event.addListener(newMarker, 'click', (function (newMarker, i) {
-                    return function () {
-                        infowindow.setContent(data[i].name);
-                        infowindow.open(map, newMarker);
-                    }
-                })(newMarker, i));
-        
-                markers.push(newMarker);
-            }
-        }
-        
-        initialize();
-
-     })
-     .fail(function( data, textStatus, jqXHR ) {
-         console.log("FAIL: "+data);
-     })
-}
-
-
-
 
 $(document).ready(function () {
 
+            //     var location = window.location.href;
+            // if (location === "http://localhost/MARC%20PROJECT/index.php?page=controller_shop&op=list"){
+            //     localStorage.removeItem('carousel');
+            //     localStorage.removeItem('category');
+            //     localStorage.removeItem('province');
+            //     localStorage.removeItem('shop');
+            //     localStorage.removeItem('val');
+            // }else{
+            //     console.log("no");
+            // }
+
+    call_fodemap();
     redirect_page();
     read_prod();
-    setfilters();
-    filters();
-    call_fodemap();
     
 })

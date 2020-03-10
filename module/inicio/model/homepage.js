@@ -40,6 +40,11 @@ function carousel() {
 
 function click_carousel(){
     $('body').on('click', '.clickcar', function() {
+        localStorage.removeItem('province');
+        localStorage.removeItem('shop');
+        localStorage.removeItem('val');
+        localStorage.removeItem('category');
+
         var car = this.getAttribute('id');
         console.log(car);
     
@@ -125,6 +130,11 @@ function category() {
 
 function select_cat() {
     $('.cate').on("click", ".img-responsive", function() {
+        localStorage.removeItem('carousel');
+        localStorage.removeItem('province');
+        localStorage.removeItem('shop');
+        localStorage.removeItem('val');
+        
         var cat = this.getAttribute('id');
 
         $.ajax({

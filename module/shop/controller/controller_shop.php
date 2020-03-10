@@ -13,7 +13,7 @@
         case 'prods';
             try{
                 $daoshop = new DAOShop();
-                $rdo = $daoshop -> select_all_product();
+                $rdo = $daoshop -> select_all_product($_GET['offset']);
             }catch (Exception $e){
                 echo json_encode("error");
             }
@@ -33,7 +33,7 @@
         case 'fromcarousel';
         try{
             $daoshop = new DAOShop();
-            $rdo = $daoshop -> select_car($_GET['name']);
+            $rdo = $daoshop -> select_car($_GET['name'], $_GET['offset']);
         }catch (Exception $e){
             echo json_encode("error");
         }
@@ -54,7 +54,7 @@
         case 'prods_select';
             try{
                 $daoshop = new DAOShop();
-                $rdo = $daoshop -> select_cat($_GET['name']);
+                $rdo = $daoshop -> select_cat($_GET['name'], $_GET['offset']);
             }catch (Exception $e){
                 echo json_encode("error");
             }
@@ -74,7 +74,7 @@
         case 'search';
             try{
                 $daoshop = new DAOShop();
-                $rdo = $daoshop -> select_search($_GET['province'], $_GET['shop'], $_GET['prod']);
+                $rdo = $daoshop -> select_search($_GET['province'], $_GET['shop'], $_GET['prod'], $_GET['offset']);
             }catch (Exception $e){
                 echo json_encode("error");
             }
