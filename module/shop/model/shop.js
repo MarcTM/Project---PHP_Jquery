@@ -274,9 +274,6 @@ function ajaxForSearch(method) {
                     console.log("FAIL: "+data);
                 })
 
-                window.addEventListener('locationchange', function(){
-                    localStorage.removeItem('carousel');
-                })
                 // localStorage.removeItem('carousel');
         break;
 
@@ -386,15 +383,6 @@ function redirect_page() {
         localStorage.removeItem('page');
         ajaxForSearch("normal");
     }
-}
-
-///////////////////////
-        ////CATEGORIES
-//////////////////////
-function fromcategory() {
-
-    localStorage.removeItem('category');
-    
 }
 
 

@@ -49,6 +49,7 @@ function click_carousel(){
         console.log(car);
     
         localStorage.setItem('carousel', car);
+
         if(car==""){ 
             toastr["info"]("Ingresa criterios de busqueda"),{"iconClass":'toast-info'};
         }else{    
@@ -145,6 +146,7 @@ function select_cat() {
 
     
         localStorage.setItem('category', cat);
+
         if(cat==""){ 
             toastr["info"]("Ingresa criterios de busqueda"),{"iconClass":'toast-info'};
         }else{    
