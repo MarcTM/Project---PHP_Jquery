@@ -9,31 +9,28 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
--I am using VisualStudioCode.
+-VisualStudioCode
+-LAMP/XAMP/WAMP
+-JQuery Libraries:
+    <script src="view/lib/jquery/jquery.min.js"></script>
+    <script src="view/lib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="view/lib/php-mail-form/validate.js"></script>
+    <script src="view/lib/easing/easing.min.js"></script>
 
 ### Installing
 
-
+-[How to install XAMP](https://vitux.com/how-to-install-xampp-on-your-ubuntu-18-04-lts-system/) - (I am using XAMP in Ubuntu)
+-[How to install VSCode](https://linuxize.com/post/how-to-install-visual-studio-code-on-ubuntu-18-04/) 
 
 ## Built With
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+* PHP - Backend
+* JavaScript - Frontend
+* JQuery - Frontend (JS Framework)
 
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+* **Marc Torres** - *Developer of the webpage*
 
 ## License
 
