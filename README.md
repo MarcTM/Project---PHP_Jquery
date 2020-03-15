@@ -12,11 +12,11 @@ These instructions will get you a copy of the project up and running on your loc
 -VisualStudioCode <br />
 -LAMP/XAMP/WAMP <br />
 -JQuery Libraries: <br />
-    <script src="view/lib/jquery/jquery.min.js"></script> <br />
-    <script src="view/lib/bootstrap/js/bootstrap.min.js"></script> <br />
-    <script src="view/lib/php-mail-form/validate.js"></script> <br />
-    <script src="view/lib/easing/easing.min.js"></script>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.css" /> <br />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.js"></script> <br />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.js"></script> <br />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
+   
 ### Installing
 
 -[How to install XAMP](https://vitux.com/how-to-install-xampp-on-your-ubuntu-18-04-lts-system/) - (I am using XAMP in Ubuntu) <br />
