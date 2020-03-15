@@ -69,6 +69,7 @@ function fodemap() {
 function ajaxForSearch(method) {
    switch (method){
         
+    // CATEGORIES
         case "cat":
             var cat = localStorage.getItem('category');
 
@@ -78,65 +79,81 @@ function ajaxForSearch(method) {
             }else{
                 var offset = localStorage.getItem('offset');
             }
-            console.log(localStorage.getItem('offset'));
 
             $.ajax({
-            type: "GET",
-            dataType: "json",
-            url:"module/shop/controller/controller_shop.php?op=prods_select&name="+cat+"&offset="+offset,
-            })
-            .done(function( data, textStatus, jqXHR ) {
-                    console.log(data);
-                    if(data.length==0 || data ==='error'){
-                        $('.centered').empty();
-                        $('<div><h3>Su búsqueda no dió resultados.</h3></div>').attr('id','list').appendTo('.centered');
+                type: "GET",
+                dataType: "json",
+                url:"module/shop/controller/controller_shop.php?op=countcat&name="+cat,
+                })
+                .done(function( cuenta, textStatus, jqXHR ) {
+                    var count = cuenta.cuenta;
+                    if (count===0){
+                        var pages = 0;
                     }else{
-                        $('.centered').empty();
-                
-                        var shop="";
-                        for (var i=0; i<data.length; i++ ){
-                            shop += '<div class="col-lg-4"><img class="img-responsive" id="'+data[i].idproduct+'" src="'+data[i].img+'"/><p>'+data[i].product+' - '+data[i].kg+'KG<br>'+data[i].brand+'<br>'+data[i].price+'€</p></div>'
-                            }
-                
-                            $('.centered').html(
-                                shop
-                            );
-
-                            if(!localStorage.getItem('page')){
-                                var page = 1;
-                            }else{
-                                var page = localStorage.getItem('page');
-                            }
-                
-                            $(".pagination").bootpag({
-                                total: 2,
-                                page: page,
-                                maxVisible: 4,
-                                next: 'NEXT',
-                                prev: 'PREV'
-                            }).on("page", function (e, num) {
-                                page = num;
-                                localStorage.setItem('page', page);
-                                console.log(num);
-                                if (num == 1){
-                                    offset = 0;
-                                    localStorage.setItem('offset', offset)
-                                }else if(num === 2){
-                                    offset = 4;
-                                    localStorage.setItem('offset', offset)
-                                }
-                                e.preventDefault();
-                                ajaxForSearch("cat");
-                            });
+                        if (count % 4 === 0){
+                            var pages = count / 4;
+                        }else{
+                            var pages = count / 4 + 1;
+                        }
                     }
-                })
-                .fail(function( data, textStatus, jqXHR ) {
-                    console.log("FAIL: "+data);
-                })
 
-                // localStorage.removeItem('category');
+                    $.ajax({
+                        type: "GET",
+                        dataType: "json",
+                        url:"module/shop/controller/controller_shop.php?op=fromcat&name="+cat+"&offset="+offset,
+                        })
+                        .done(function( data, textStatus, jqXHR ) {
+                                console.log(data);
+                                if(data.length==0 || data ==='error'){
+                                    $('.centered').empty();
+                                    $('<div><h3>Su búsqueda no dió resultados.</h3></div>').attr('id','list').appendTo('.centered');
+                                }else{
+                                    $('.centered').empty();
+                            
+                                    var shop="";
+                                    for (var i=0; i<data.length; i++ ){
+                                        shop += '<div class="col-lg-4"><img class="img-responsive" id="'+data[i].idproduct+'" src="'+data[i].img+'"/><p>'+data[i].product+' - '+data[i].kg+'KG<br>'+data[i].brand+'<br>'+data[i].price+'€</p></div>'
+                                        }
+                            
+                                        $('.centered').html(
+                                            shop
+                                        );
+            
+                                        if(!localStorage.getItem('page')){
+                                            var page = 1;
+                                        }else{
+                                            var page = localStorage.getItem('page');
+                                        }
+                            
+                                        $(".pagination").bootpag({
+                                            total: pages,
+                                            page: page,
+                                            maxVisible: 4,
+                                            next: 'NEXT',
+                                            prev: 'PREV'
+                                        }).on("page", function (e, num) {
+                                            page = num;
+                                            localStorage.setItem('page', page);
+                                            console.log(num);
+                                            if (num == 1){
+                                                offset = 0;
+                                                localStorage.setItem('offset', offset)
+                                            }else if(num === 2){
+                                                offset = 4;
+                                                localStorage.setItem('offset', offset)
+                                            }
+                                            e.preventDefault();
+                                            ajaxForSearch("cat");
+                                        });
+                                }
+                            })
+                            .fail(function( data, textStatus, jqXHR ) {
+                                console.log("FAIL: "+data);
+                            })
+                })
         break;
     
+        // SEARCH BAR
         case "searchbar":
             var province=localStorage.getItem('province');
             var shop=localStorage.getItem('shop');
@@ -148,67 +165,81 @@ function ajaxForSearch(method) {
             }else{
                 var offset = localStorage.getItem('offset');
             }
-            console.log(localStorage.getItem('offset'));
 
             $.ajax({
-            type: "GET",
-            dataType: "json",
-            url:"module/shop/controller/controller_shop.php?op=search&province="+province+"&shop="+shop+"&prod="+auto+"&offset="+offset,
-            })
-            .done(function( data, textStatus, jqXHR ) {
-                    console.log(data);
-                    if(data.length==0 || data ==='error'){
-                        $('.centered').empty();
-                        $('<div><h3>Su búsqueda no dió resultados.</h3></div>').attr('id','list').appendTo('.centered');
+                type: "GET",
+                dataType: "json",
+                url:"module/shop/controller/controller_shop.php?op=countsearchbar&province="+province+"&shop="+shop+"&prod="+auto,
+                })
+                .done(function( cuenta, textStatus, jqXHR ) {
+                    var count = cuenta.cuenta;
+                    if (count===0){
+                        var pages = 0;
                     }else{
-                        $('.centered').empty();
-                
-                        var shop="";
-                        for (var i=0; i<data.length; i++ ){
-                            shop += '<div class="col-lg-4"><img class="img-responsive" id="'+data[i].idproduct+'" src="'+data[i].img+'"/><p>'+data[i].product+' - '+data[i].kg+'KG<br>'+data[i].brand+'<br>'+data[i].price+'€</p></div>'
-                            }
-                
-                            $('.centered').html(
-                                shop
-                            );
-
-                            if(!localStorage.getItem('page')){
-                                var page = 1;
-                            }else{
-                                var page = localStorage.getItem('page');
-                            }
-                
-                            $(".pagination").bootpag({
-                                total: 2,
-                                page: page,
-                                maxVisible: 4,
-                                next: 'NEXT',
-                                prev: 'PREV'
-                            }).on("page", function (e, num) {
-                                page = num;
-                                localStorage.setItem('page', page);
-                                console.log(num);
-                                if (num == 1){
-                                    offset = 0;
-                                    localStorage.setItem('offset', offset)
-                                }else if(num === 2){
-                                    offset = 4;
-                                    localStorage.setItem('offset', offset)
-                                }
-                                e.preventDefault();
-                                ajaxForSearch("searchbar");
-                            });
+                        if (count % 4 === 0){
+                            var pages = count / 4;
+                        }else{
+                            var pages = count / 4 + 1;
+                        }
                     }
-                })
-                .fail(function( data, textStatus, jqXHR ) {
-                    console.log("FAIL: "+data);
-                })
 
-                // localStorage.removeItem('province');
-                // localStorage.removeItem('shop');
-                // localStorage.removeItem('val');
+                    $.ajax({
+                        type: "GET",
+                        dataType: "json",
+                        url:"module/shop/controller/controller_shop.php?op=searchbar&province="+province+"&shop="+shop+"&prod="+auto+"&offset="+offset,
+                        })
+                        .done(function( data, textStatus, jqXHR ) {
+                                console.log(data);
+                                if(data.length==0 || data ==='error'){
+                                    $('.centered').empty();
+                                    $('<div><h3>Su búsqueda no dió resultados.</h3></div>').attr('id','list').appendTo('.centered');
+                                }else{
+                                    $('.centered').empty();
+                            
+                                    var shop="";
+                                    for (var i=0; i<data.length; i++ ){
+                                        shop += '<div class="col-lg-4"><img class="img-responsive" id="'+data[i].idproduct+'" src="'+data[i].img+'"/><p>'+data[i].product+' - '+data[i].kg+'KG<br>'+data[i].brand+'<br>'+data[i].price+'€</p></div>'
+                                        }
+                            
+                                        $('.centered').html(
+                                            shop
+                                        );
+            
+                                        if(!localStorage.getItem('page')){
+                                            var page = 1;
+                                        }else{
+                                            var page = localStorage.getItem('page');
+                                        }
+                            
+                                        $(".pagination").bootpag({
+                                            total: pages,
+                                            page: page,
+                                            maxVisible: 4,
+                                            next: 'NEXT',
+                                            prev: 'PREV'
+                                        }).on("page", function (e, num) {
+                                            page = num;
+                                            localStorage.setItem('page', page);
+                                            console.log(num);
+                                            if (num == 1){
+                                                offset = 0;
+                                                localStorage.setItem('offset', offset)
+                                            }else if(num === 2){
+                                                offset = 4;
+                                                localStorage.setItem('offset', offset)
+                                            }
+                                            e.preventDefault();
+                                            ajaxForSearch("searchbar");
+                                        });
+                                }
+                            })
+                            .fail(function( data, textStatus, jqXHR ) {
+                                console.log("FAIL: "+data);
+                            })
+                })
         break;
 
+        // CAROUSEL
         case "carousel":
             var car=localStorage.getItem('carousel');
 
@@ -218,148 +249,171 @@ function ajaxForSearch(method) {
             }else{
                 var offset = localStorage.getItem('offset');
             }
-            console.log(localStorage.getItem('offset'));
 
             $.ajax({
-            type: "GET",
-            dataType: "json",
-            url:"module/shop/controller/controller_shop.php?op=fromcarousel&name="+car+"&offset="+offset,
-            })
-            .done(function( data, textStatus, jqXHR ) {
-                    console.log(data);
-                    if(data.length==0 || data ==='error'){
-                        $('.centered').empty();
-                        $('<div><h3>Su búsqueda no dió resultados.</h3></div>').attr('id','list').appendTo('.centered');
+                type: "GET",
+                dataType: "json",
+                url:"module/shop/controller/controller_shop.php?op=countcarousel&name="+car,
+                })
+                .done(function( cuenta, textStatus, jqXHR ) {
+                    var count = cuenta.cuenta;
+                    if (count===0){
+                        var pages = 0;
                     }else{
-                        $('.centered').empty();
-                
-                        var shop="";
-                        for (var i=0; i<data.length; i++ ){
-                            shop += '<div class="col-lg-4"><img class="img-responsive" id="'+data[i].idproduct+'" src="'+data[i].img+'"/><p>'+data[i].product+' - '+data[i].kg+'KG<br>'+data[i].brand+'<br>'+data[i].price+'€</p></div>'
-                            }
-                
-                            $('.centered').html(
-                                shop
-                            );
-
-                            if(!localStorage.getItem('page')){
-                                var page = 1;
-                            }else{
-                                var page = localStorage.getItem('page');
-                            }
-                
-                            $(".pagination").bootpag({
-                                total: 2,
-                                page: page,
-                                maxVisible: 4,
-                                next: 'NEXT',
-                                prev: 'PREV'
-                            }).on("page", function (e, num) {
-                                page = num;
-                                localStorage.setItem('page', page);
-                                console.log(num);
-                                if (num == 1){
-                                    offset = 0;
-                                    localStorage.setItem('offset', offset)
-                                }else if(num === 2){
-                                    offset = 4;
-                                    localStorage.setItem('offset', offset)
-                                }
-                                e.preventDefault();
-                                ajaxForSearch("carousel");
-                            });
+                        if (count % 4 === 0){
+                            var pages = count / 4;
+                        }else{
+                            var pages = count / 4 + 1;
+                        }
                     }
-                })
-                .fail(function( data, textStatus, jqXHR ) {
-                    console.log("FAIL: "+data);
-                })
 
-                // localStorage.removeItem('carousel');
+                    $.ajax({
+                        type: "GET",
+                        dataType: "json",
+                        url:"module/shop/controller/controller_shop.php?op=fromcarousel&name="+car+"&offset="+offset,
+                        })
+                        .done(function( data, textStatus, jqXHR ) {
+                                console.log(data);
+                                if(data.length==0 || data ==='error'){
+                                    $('.centered').empty();
+                                    $('<div><h3>Su búsqueda no dió resultados.</h3></div>').attr('id','list').appendTo('.centered');
+                                }else{
+                                    $('.centered').empty();
+                            
+                                    var shop="";
+                                    for (var i=0; i<data.length; i++ ){
+                                        shop += '<div class="col-lg-4"><img class="img-responsive" id="'+data[i].idproduct+'" src="'+data[i].img+'"/><p>'+data[i].product+' - '+data[i].kg+'KG<br>'+data[i].brand+'<br>'+data[i].price+'€</p></div>'
+                                        }
+                            
+                                        $('.centered').html(
+                                            shop
+                                        );
+            
+                                        if(!localStorage.getItem('page')){
+                                            var page = 1;
+                                        }else{
+                                            var page = localStorage.getItem('page');
+                                        }
+                            
+                                        $(".pagination").bootpag({
+                                            total: pages,
+                                            page: page,
+                                            maxVisible: 4,
+                                            next: 'NEXT',
+                                            prev: 'PREV'
+                                        }).on("page", function (e, num) {
+                                            page = num;
+                                            localStorage.setItem('page', page);
+                                            console.log(num);
+                                            if (num == 1){
+                                                offset = 0;
+                                                localStorage.setItem('offset', offset)
+                                            }else if(num === 2){
+                                                offset = 4;
+                                                localStorage.setItem('offset', offset)
+                                            }
+                                            e.preventDefault();
+                                            ajaxForSearch("carousel");
+                                        });
+                                }
+                            })
+                            .fail(function( data, textStatus, jqXHR ) {
+                                console.log("FAIL: "+data);
+                            })
+                })
         break;
 
+        // NORMAL SHOP
         case "normal":
-            // var location = window.location.href;
-            // if (location === "http://localhost/MARC%20PROJECT/index.php?page=controller_shop&op=list"){
-            //     localStorage.removeItem('carousel');
-            //     localStorage.removeItem('category');
-            //     localStorage.removeItem('province');
-            //     localStorage.removeItem('shop');
-            //     localStorage.removeItem('val');
-            // }else{
-            //     console.log("no");
-            // }
-
-            if (!localStorage.getItem('offset')){
+              if (!localStorage.getItem('offset')){
                 var offset = 0;
                 localStorage.setItem('offset', offset);
             }else{
                 var offset = localStorage.getItem('offset');
             }
-            console.log(localStorage.getItem('offset'));
+
 
             $.ajax({
                 type: "GET",
                 dataType: "json",
-                url:"module/shop/controller/controller_shop.php?op=prods&offset="+offset,
+                url:"module/shop/controller/controller_shop.php?op=countnormal",
                 })
-                .done(function( data, textStatus, jqXHR ) {
-                        console.log(data);
-                        if(data.length==0 || data ==='error'){
-                            $('.centered').empty();
-                            $('<div><h3>Su búsqueda no dió resultados.</h3></div>').attr('id','list').appendTo('.centered');
+                .done(function( cuenta, textStatus, jqXHR ) {
+                    var count = cuenta.cuenta;
+                    if (count===0){
+                        var pages = 0;
+                    }else{
+                        if (count % 4 === 0){
+                            var pages = count / 4;
                         }else{
-                            $('.centered').empty();
-                    
-                            var shop="";
-                            for (var i=0; i<data.length; i++ ){
-                                shop += '<div class="col-lg-4"><img class="img-responsive" id="'+data[i].idproduct+'" src="'+data[i].img+'"/><p>'+data[i].product+' - '+data[i].kg+'KG<br>'+data[i].brand+'<br>'+data[i].price+'€</p></div>'
-                                }
-                    
-                                $('.centered').html(
-                                    shop
-                                );
-                    
-                                if(!localStorage.getItem('page')){
-                                    var page = 1;
-                                }else{
-                                    var page = localStorage.getItem('page');
-                                }
-
-                                $(".pagination").bootpag({
-                                    total: 2,
-                                    page: page,
-                                    maxVisible: 4,
-                                    next: 'NEXT',
-                                    prev: 'PREV'
-                                }).on("page", function (e, num) {
-                                    page = num;
-                                    localStorage.setItem('page', page);
-                                    console.log(num);
-                                    if (num == 1){
-                                        offset = 0;
-                                        localStorage.setItem('offset', offset)
-                                    }else if(num === 2){
-                                        offset = 4;
-                                        localStorage.setItem('offset', offset)
-                                    }
-                                    e.preventDefault();
-                                    ajaxForSearch("normal");
-                                });
+                            var pages = count / 4 + 1;
                         }
-                    })
-                    .fail(function( data, textStatus, jqXHR ) {
-                        console.log("FAIL: "+data);
-                    })
+                    }
 
-                    setfiltersnormal();
-                    filtersnormal();
+                    $.ajax({
+                        type: "GET",
+                        dataType: "json",
+                        url:"module/shop/controller/controller_shop.php?op=normalshop&offset="+offset,
+                        })
+                        .done(function( data, textStatus, jqXHR ) {
+                                console.log(data);
+                                if(data.length==0 || data ==='error'){
+                                    $('.centered').empty();
+                                    $('<div><h3>Su búsqueda no dió resultados.</h3></div>').attr('id','list').appendTo('.centered');
+                                }else{
+                                    $('.centered').empty();
+                            
+                                    var shop="";
+                                    for (var i=0; i<data.length; i++ ){
+                                        shop += '<div class="col-lg-4"><img class="img-responsive" id="'+data[i].idproduct+'" src="'+data[i].img+'"/><p>'+data[i].product+' - '+data[i].kg+'KG<br>'+data[i].brand+'<br>'+data[i].price+'€</p></div>'
+                                        }
+                            
+                                        $('.centered').html(
+                                            shop
+                                        );
+                            
+                                        if(!localStorage.getItem('page')){
+                                            var page = 1;
+                                        }else{
+                                            var page = localStorage.getItem('page');
+                                        }
+        
+                                        $(".pagination").bootpag({
+                                            total: pages,
+                                            page: page,
+                                            maxVisible: 4,
+                                            next: 'NEXT',
+                                            prev: 'PREV'
+                                        }).on("page", function (e, num) {
+                                            page = num;
+                                            localStorage.setItem('page', page);
+                                            console.log(num);
+                                            if (num == 1){
+                                                offset = 0;
+                                                localStorage.setItem('offset', offset)
+                                            }else if(num === 2){
+                                                offset = 4;
+                                                localStorage.setItem('offset', offset)
+                                            }
+                                            e.preventDefault();
+                                            ajaxForSearch("normal");
+                                        });
+                                }
+                            })
+                            .fail(function( data, textStatus, jqXHR ) {
+                                console.log("FAIL: "+data);
+                            })
+                })
+
+                setfiltersnormal();
+                filtersnormal();
         break;
    }
 }
 
 
 ///////////////////////
-        ////CATEGORIES+SEARCH+CAROUSEL
+        ////REDIRECT CATEGORIES,SEARCH,CAROUSEL,NORMAL SHOP
 //////////////////////
 function redirect_page() {
     var cat=localStorage.getItem('category');
@@ -444,7 +498,6 @@ function read_prod() {
 ///////////////////////
         ////FILTERS
 //////////////////////
-
 function setfiltersnormal() {
     $('.filters_shop').html(
         '<form name="selfilters" class="filtering">'+
@@ -637,7 +690,6 @@ function filtersnormal() {
     });
 }
 
-
 function envia($checks, $count) {
     $.ajax({
         type: "GET",
@@ -668,21 +720,29 @@ function envia($checks, $count) {
 
 
 
-$(document).ready(function () {
 
-            //     var location = window.location.href;
-            // if (location === "http://localhost/MARC%20PROJECT/index.php?page=controller_shop&op=list"){
-            //     localStorage.removeItem('carousel');
-            //     localStorage.removeItem('category');
-            //     localStorage.removeItem('province');
-            //     localStorage.removeItem('shop');
-            //     localStorage.removeItem('val');
-            // }else{
-            //     console.log("no");
-            // }
+///////////////////////
+        ////DELETE LOCAL STORAGE FOR SHOP
+//////////////////////
+function dellocalstorage(){
+    $('body').on('click', '#localdel', function() {
+        localStorage.removeItem('province');
+        localStorage.removeItem('shop');
+        localStorage.removeItem('val');
+        localStorage.removeItem('category');
+        localStorage.removeItem('carousel');
+    });
+}
+
+
+
+
+
+$(document).ready(function () {
 
     call_fodemap();
     redirect_page();
     read_prod();
+    dellocalstorage();  
     
 })

@@ -5,12 +5,19 @@
     
     
     switch($_GET['op']){
+        
+///////////////////////
+////LIST
+//////////////////////
         case 'list';
             include("module/shop/view/shop.html");
         break;
 
 
-        case 'prods';
+///////////////////////
+////NORMAL SHOP
+//////////////////////
+        case 'normalshop';
             try{
                 $daoshop = new DAOShop();
                 $rdo = $daoshop -> select_all_product($_GET['offset']);
@@ -29,7 +36,26 @@
             }
         break;
 
+        case 'countnormal';
+            try{
+                $daoshop = new DAOShop();
+                $rdo = $daoshop -> countnormal();
+            }catch (Exception $e){
+                echo json_encode("error");
+            }
+            
+            if(!$rdo){
+                echo json_encode("error");
+            }else{
+                $datainfo = get_object_vars($rdo);
+                echo json_encode($datainfo);
+            }
+        break;
 
+
+///////////////////////
+////SHOP CAROUSEL
+//////////////////////
         case 'fromcarousel';
         try{
             $daoshop = new DAOShop();
@@ -49,9 +75,27 @@
         }
     break;
 
+    case 'countcarousel';
+            try{
+                $daoshop = new DAOShop();
+                $rdo = $daoshop -> countcarousel($_GET['name']);
+            }catch (Exception $e){
+                echo json_encode("error");
+            }
+            
+            if(!$rdo){
+                echo json_encode("error");
+            }else{
+                $datainfo = get_object_vars($rdo);
+                echo json_encode($datainfo);
+            }
+        break;
 
 
-        case 'prods_select';
+///////////////////////
+////SHOP CATEGORY
+//////////////////////
+        case 'fromcat';
             try{
                 $daoshop = new DAOShop();
                 $rdo = $daoshop -> select_cat($_GET['name'], $_GET['offset']);
@@ -70,8 +114,27 @@
             }
         break;
 
+        case 'countcat';
+        try{
+            $daoshop = new DAOShop();
+            $rdo = $daoshop -> countcat($_GET['name']);
+        }catch (Exception $e){
+            echo json_encode("error");
+        }
+        
+        if(!$rdo){
+            echo json_encode("error");
+        }else{
+            $datainfo = get_object_vars($rdo);
+            echo json_encode($datainfo);
+        }
+        break;
 
-        case 'search';
+
+///////////////////////
+////SHOP SEARCHBAR
+//////////////////////
+        case 'searchbar';
             try{
                 $daoshop = new DAOShop();
                 $rdo = $daoshop -> select_search($_GET['province'], $_GET['shop'], $_GET['prod'], $_GET['offset']);
@@ -90,7 +153,26 @@
             }
         break;
 
+        case 'countsearchbar';
+        try{
+            $daoshop = new DAOShop();
+            $rdo = $daoshop -> countsearchbar($_GET['province'], $_GET['shop'], $_GET['prod']);
+        }catch (Exception $e){
+            echo json_encode("error");
+        }
+        
+        if(!$rdo){
+            echo json_encode("error");
+        }else{
+            $datainfo = get_object_vars($rdo);
+            echo json_encode($datainfo);
+        }
+        break;
 
+
+///////////////////////
+////READ PRODUCT AND UPDATE VIEWS
+//////////////////////
         case 'read_modal':
             try{
                 $daomodal = new DAOShop();
@@ -113,6 +195,9 @@
         break;
 
 
+///////////////////////
+////FILTERS NORMAL SHOP
+//////////////////////
         case 'filter':
             try{
                 $daofilter = new DAOShop();
@@ -135,6 +220,9 @@
         break;
 
 
+///////////////////////
+////MAPS (SHOPS)
+////////////////////// 
         case 'maps':
             try{
                 $daoshops = new DAOShop();

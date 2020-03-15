@@ -1,7 +1,7 @@
 
-//////////
+////////////////
 //CAROUSEL
-//////
+//////////
 function carousel() {
     $.ajax({
         url: "module/inicio/controller/controller_homepage.php?op=carousel",
@@ -36,8 +36,6 @@ function carousel() {
     });
 }
 
-
-
 function click_carousel(){
     $('body').on('click', '.clickcar', function() {
         localStorage.removeItem('province');
@@ -61,9 +59,9 @@ function click_carousel(){
 
 
 
-//////////
+////////////////
 //CATEGORIES
-//////
+///////////
 function ajaxForSearch(offset){
     $.ajax({
         url: "module/inicio/controller/controller_homepage.php?op=category&offset="+offset,
@@ -72,9 +70,6 @@ function ajaxForSearch(offset){
 
     })
     .done(function(data) {  
-        if(data==="error"){
-            console.log("mierda");
-        }
         var cate = "";
         for (var i=0; i<data.length; i++ ){
             cate += '<div class="col-lg-4"><img class="img-responsive" id="'+data[i].id+'" src="'+data[i].url+'"/><p><b>'+data[i].cat+'</b></p></div>'
@@ -94,8 +89,6 @@ function ajaxForSearch(offset){
          }
     });
 };
-
-
 
 function category() {
     $.ajax({
@@ -127,8 +120,6 @@ function category() {
      })
 }
 
-
-
 function select_cat() {
     $('.cate').on("click", ".img-responsive", function() {
         localStorage.removeItem('carousel');
@@ -159,9 +150,9 @@ function select_cat() {
 
 
 
-//////////
+////////////////////
 //MORE VISITED
-//////
+///////////////
 function byviews(offset) {
     $.ajax({
            url: "module/inicio/controller/controller_homepage.php?op=views&offset="+offset,
@@ -190,8 +181,6 @@ function byviews(offset) {
        });
    
    }
-
-
 
    function prods_views() {
     $.ajax({
@@ -222,8 +211,6 @@ function byviews(offset) {
         });
      })
     }
-
-
 
    function read_prod_views() {
     $('.byviews').on("click", ".img-responsive", function() {
@@ -276,6 +263,60 @@ function byviews(offset) {
 
 
 
+////////////////////
+//MORE VISITED
+///////////////
+function apibooks(){
+    $.ajax({
+        type: "GET",
+        dataType: "JSON",
+        url: "https://www.googleapis.com/books/v1/volumes?q=nutrition",
+    })
+     .done(function(data) {
+
+         var api = "";
+         for (var i=0; i<4; i++ ){
+            var link = data.items[i].volumeInfo.infoLink;
+            var title = data.items[i].volumeInfo.title;
+            var img = data.items[i].volumeInfo.imageLinks.smallThumbnail;
+            console.log(img);
+             api += '<div class="col-lg-4"><a href="'+link+'" target="_blank"><img class="img-responsive" src="'+img+'"/><p><b>"'+title+'"</b></p><a/></div>'
+         }
+ 
+         $('.books').html(
+             api
+         );
+     })
+     .fail(function( jqXHR, textStatus, errorThrown ) {
+         if ( console && console.log ) {
+             console.log( "La solicitud ha fallado: " +  textStatus);
+         }
+    });
+}
+
+
+
+
+
+
+
+///////////////////////
+        ////DELETE LOCAL STORAGE FOR SHOP
+//////////////////////
+function dellocalstorage(){
+    $('body').on('click', '#localdel', function() {
+        localStorage.removeItem('province');
+        localStorage.removeItem('shop');
+        localStorage.removeItem('val');
+        localStorage.removeItem('category');
+        localStorage.removeItem('carousel');
+    });
+}
+
+
+
+
+
 
 $(document).ready(function () {
 
@@ -285,5 +326,7 @@ $(document).ready(function () {
     select_cat();
     prods_views();
     read_prod_views();
+    apibooks();
+    dellocalstorage();
 
 });
