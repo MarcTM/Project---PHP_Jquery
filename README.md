@@ -9,17 +9,17 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
--VisualStudioCode
--LAMP/XAMP/WAMP
--JQuery Libraries:
-    <script src="view/lib/jquery/jquery.min.js"></script>
-    <script src="view/lib/bootstrap/js/bootstrap.min.js"></script>
-    <script src="view/lib/php-mail-form/validate.js"></script>
+-VisualStudioCode <br />
+-LAMP/XAMP/WAMP <br />
+-JQuery Libraries: <br />
+    <script src="view/lib/jquery/jquery.min.js"></script> <br />
+    <script src="view/lib/bootstrap/js/bootstrap.min.js"></script> <br />
+    <script src="view/lib/php-mail-form/validate.js"></script> <br />
     <script src="view/lib/easing/easing.min.js"></script>
 
 ### Installing
 
--[How to install XAMP](https://vitux.com/how-to-install-xampp-on-your-ubuntu-18-04-lts-system/) - (I am using XAMP in Ubuntu)
+-[How to install XAMP](https://vitux.com/how-to-install-xampp-on-your-ubuntu-18-04-lts-system/) - (I am using XAMP in Ubuntu) <br />
 -[How to install VSCode](https://linuxize.com/post/how-to-install-visual-studio-code-on-ubuntu-18-04/) 
 
 ## Built With
