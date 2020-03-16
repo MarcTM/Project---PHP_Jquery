@@ -180,85 +180,48 @@ function byviews(offset) {
             }
        });
    
-   }
+}
 
-   function prods_views() {
-    $.ajax({
-        url: "module/inicio/controller/controller_homepage.php?op=count_prods",
-        type: "GET",
-        dataType: "JSON",
-    })
-    .done(function(data) {
-        var cuenta = data.cuenta;
-        var offset = 0;
+function prods_views() {
+$.ajax({
+    url: "module/inicio/controller/controller_homepage.php?op=count_prods",
+    type: "GET",
+    dataType: "JSON",
+})
+.done(function(data) {
+    var cuenta = data.cuenta;
+    var offset = 0;
 
-        byviews(offset);
-    
-        $(document).on("click", ".next2", function() {
-           offset += 4;
-           if(offset>=cuenta){
-               offset -= 4;
-           }
-           byviews(offset);
-        });
-    
-        $(document).on("click", ".prev2", function() {
+    byviews(offset);
+
+    $(document).on("click", ".next2", function() {
+        offset += 4;
+        if(offset>=cuenta){
             offset -= 4;
-            if(offset<0){
-                offset += 4;
-            }
-            byviews(offset);
-        });
-     })
-    }
+        }
+        byviews(offset);
+    });
 
-   function read_prod_views() {
+    $(document).on("click", ".prev2", function() {
+        offset -= 4;
+        if(offset<0){
+            offset += 4;
+        }
+        byviews(offset);
+    });
+    })
+}
+
+    
+
+function read_prod() {
     $('.byviews').on("click", ".img-responsive", function() {
 
         var id = this.getAttribute('id');
-        
-        $.ajax({
-            type: "GET",
-            dataType: "JSON",
-            url: "module/inicio/controller/controller_homepage.php?op=read_modal&modal=" + id,
-        })
-         .done(function(data) {
+        localStorage.setItem('infoprod', id);
 
-             $('.bx-pager').empty();
-             $('.bx-wrapper').empty();
-             $('.bx-prev').empty();
-             $('.bx-next').empty();
-
-             $('.ali').empty();
-             $('.slider').empty();
-             $('.categories').empty();
-             $('.views').empty();
-
-
-             $('#infoprod').empty();
-             $('<div></div>').attr('id','details').appendTo('#infoprod');
-             $("#details").html(
-                '<div class="viewsinfo">'+
-                '<br><span><img class="img-responsive" src="'+data.img+'"></span></br>'+
-                '<br><span>Code:   <span id="codprod1">'+data.codprod+'</span></span></br>'+
-                '<br><span>Product:   <span id="product1">'+data.product+'</span></span></br>'+
-                '<br><span>Ingredients:     <span id="ingredients1">'+data.ingredients+'</span></span></br>'+
-                '<br><span>Flavour:     <span id="flavour1">'+data.flavour+'</span></span></br>'+
-                '<br><span>Brand:     <span id="brand1">'+data.brand+'</span></span></br>'+
-                '<br><span>KG:    <span id="kg1">'+data.kg+'</span></span></br>'+
-                '<br><span>Date of caducity:     <span id="datecaducity1">'+data.datecaducity+'</span></span></br>'+
-                '<br><span>Description:     <span id="datecaducity1">'+data.descr+'</span></span></br>'+
-                '<br><span>Price:     <span id="datecaducity1">'+data.price+'€</span></span></br>'+
-                '</div>'
-     );
-         })
-         .fail(function( jqXHR, textStatus, errorThrown ) {
-             if ( console && console.log ) {
-                 console.log( "La solicitud ha fallado: " +  textStatus);
-             }
-        });
-
-    });
+        setTimeout('window.location.href = "index.php?page=controller_details&op=list",1000');
+    })
 }
 
 
@@ -347,7 +310,7 @@ $(document).ready(function () {
     category();
     select_cat();
     prods_views();
-    read_prod_views();
+    read_prod();
     apibooks();
     dellocalstorage();
 

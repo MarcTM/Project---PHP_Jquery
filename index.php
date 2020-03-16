@@ -7,6 +7,10 @@
 
 		include("view/inc/top/top_page_shop.html");
 
+	}else if ((isset($_GET['page'])) && ($_GET['page']==="controller_details") ){
+
+		include("view/inc/top/top_page_details.html");
+
 	}else if ((isset($_GET['page'])) && ($_GET['page']==="controller_clients") ){
 
 		include("view/inc/top/top_page_clients.html");

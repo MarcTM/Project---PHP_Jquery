@@ -466,49 +466,11 @@ function read_prod() {
     $('body').on("click", ".img-responsive", function() {
 
         var id = this.getAttribute('id');
-        
-        $.ajax({
-            type: "GET",
-            dataType: "JSON",
-            url: "module/shop/controller/controller_shop.php?op=read_modal&modal=" + id,
-        })
-         .done(function(data) {
-                $('.pagination').empty();
-                 $('.alishop').empty();
-                 $('.filters_shop').empty();
-                 
-                 $('.prods').empty();
+        localStorage.setItem('infoprod', id);
 
-
-                 $('#infoprod').empty();
-                 $('<div></div>').attr('id','details').appendTo('#infoprod');
-                    
-                 $("#details").html(
-                            '<div class="tolainfo">'+
-                            '<br><span><img class="img-responsive" src="'+data.img+'"></span></br>'+
-                            '<br><span>Code:   <span id="codprod1">'+data.codprod+'</span></span></br>'+
-                            '<br><span>Product:   <span id="product1">'+data.product+'</span></span></br>'+
-                            '<br><span>Ingredients:     <span id="ingredients1">'+data.ingredients+'</span></span></br>'+
-                            '<br><span>Flavour:     <span id="flavour1">'+data.flavour+'</span></span></br>'+
-                            '<br><span>Brand:     <span id="brand1">'+data.brand+'</span></span></br>'+
-                            '<br><span>KG:    <span id="kg1">'+data.kg+'</span></span></br>'+
-                            '<br><span>Date of caducity:     <span id="datecaducity1">'+data.datecaducity+'</span></span></br>'+
-                            '<br><span>Description:     <span id="datecaducity1">'+data.descr+'</span></span></br>'+
-                            '<br><span>Price:     <span id="datecaducity1">'+data.price+'€</span></span></br>'+
-                            '</div>'
-                 );
-         })
-         .fail(function( jqXHR, textStatus, errorThrown ) {
-             if ( console && console.log ) {
-                 console.log( "La solicitud ha fallado: " +  textStatus);
-             }
-        });
-
-    });
-
-    apibooks(); 
+        setTimeout('window.location.href = "index.php?page=controller_details&op=list",1000');
+    })
 }
-
 
 
 
