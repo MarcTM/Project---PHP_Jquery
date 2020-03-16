@@ -1,4 +1,4 @@
-# MARC PROJECT 1DAW PHP % JQUERY
+# MARC PROJECT 1DAW PHP & JQUERY
 
 This is my PHP with JS/JQUERY project that I'm doing at this moment in 1DAW.
 It consists on a supplements webpage, with its Homepage, Shop, Services, Meet Us, Contact, etc.
