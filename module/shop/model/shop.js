@@ -138,8 +138,12 @@ function ajaxForSearch(method) {
                                             if (num == 1){
                                                 offset = 0;
                                                 localStorage.setItem('offset', offset)
-                                            }else if(num === 2){
-                                                offset = 4;
+                                            }else{
+                                                var sum = 0;
+                                                for (var i = 1; i<num; i++){
+                                                    sum += 4;
+                                                }
+                                                offset = sum;
                                                 localStorage.setItem('offset', offset)
                                             }
                                             e.preventDefault();
@@ -224,8 +228,12 @@ function ajaxForSearch(method) {
                                             if (num == 1){
                                                 offset = 0;
                                                 localStorage.setItem('offset', offset)
-                                            }else if(num === 2){
-                                                offset = 4;
+                                            }else{
+                                                var sum = 0;
+                                                for (var i = 1; i<num; i++){
+                                                    sum += 4;
+                                                }
+                                                offset = sum;
                                                 localStorage.setItem('offset', offset)
                                             }
                                             e.preventDefault();
@@ -308,8 +316,12 @@ function ajaxForSearch(method) {
                                             if (num == 1){
                                                 offset = 0;
                                                 localStorage.setItem('offset', offset)
-                                            }else if(num === 2){
-                                                offset = 4;
+                                            }else{
+                                                var sum = 0;
+                                                for (var i = 1; i<num; i++){
+                                                    sum += 4;
+                                                }
+                                                offset = sum;
                                                 localStorage.setItem('offset', offset)
                                             }
                                             e.preventDefault();
@@ -391,8 +403,12 @@ function ajaxForSearch(method) {
                                             if (num == 1){
                                                 offset = 0;
                                                 localStorage.setItem('offset', offset)
-                                            }else if(num === 2){
-                                                offset = 4;
+                                            }else{
+                                                var sum = 0;
+                                                for (var i = 1; i<num; i++){
+                                                    sum += 4;
+                                                }
+                                                offset = sum;
                                                 localStorage.setItem('offset', offset)
                                             }
                                             e.preventDefault();
@@ -458,10 +474,10 @@ function read_prod() {
         })
          .done(function(data) {
                 $('.pagination').empty();
-                 $('.ali').empty();
+                 $('.alishop').empty();
                  $('.filters_shop').empty();
                  
-                 $('.centered').empty();
+                 $('.prods').empty();
 
 
                  $('#infoprod').empty();
@@ -489,6 +505,8 @@ function read_prod() {
         });
 
     });
+
+    apibooks(); 
 }
 
 
@@ -738,11 +756,72 @@ function dellocalstorage(){
 
 
 
+
+////////////////////
+//APIs
+///////////////
+function apibooks(){
+    $.ajax({
+        type: "GET",
+        dataType: "JSON",
+        url: "https://www.googleapis.com/books/v1/volumes?q=nutrition",
+    })
+     .done(function(data) {
+         var api = "";
+         for (var i=0; i<4; i++ ){
+            var check = "false";
+            var random = Math.floor(Math.random() * data.items.length) + 0;
+            if (i === 0){
+                var arr = [];
+                arr.push(random); 
+
+                var link = data.items[random].volumeInfo.infoLink;
+                var title = data.items[random].volumeInfo.title;
+                var img = data.items[random].volumeInfo.imageLinks.smallThumbnail;
+                api += '<div class="col-lg-4"><a href="'+link+'" target="_blank"><img src="'+img+'"/><p><b>"'+title+'"</b></p><a/></div>'
+            }else{
+                for (var i=0; i<arr.length; i++){
+                    if (random === arr[i]){
+                        check = "true";
+                    }
+                }
+            
+                if (check === "true"){
+                    i -= 1;
+                }else{
+                    arr.push(random);            
+
+                    var link = data.items[random].volumeInfo.infoLink;
+                    var title = data.items[random].volumeInfo.title;
+                    var img = data.items[random].volumeInfo.imageLinks.smallThumbnail;
+                    api += '<div class="col-lg-4"><a href="'+link+'" target="_blank"><img src="'+img+'"/><p><b>"'+title+'"</b></p><a/></div>'
+                }
+            }
+         }
+         
+         $('.books').html(
+             api
+         );
+     })
+     .fail(function( jqXHR, textStatus, errorThrown ) {
+         if ( console && console.log ) {
+             console.log( "La solicitud ha fallado: " +  textStatus);
+         }
+    });
+}
+
+
+
+
+
+
+
 $(document).ready(function () {
 
     call_fodemap();
     redirect_page();
     read_prod();
-    dellocalstorage();  
+    dellocalstorage();
+    apibooks();  
     
 })

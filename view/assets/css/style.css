@@ -209,7 +209,7 @@ margin-left: 120px;
 }
 
 .filters_shop {
-  margin-top: 50px;
+  margin-top: 150px;
   margin-left: 20px;
   margin-bottom: 40px;
   float: left;
@@ -239,8 +239,8 @@ margin-left: 120px;
 /* Helpers */
 
 .mt {
-  margin-top: 40px;
-  margin-bottom: 40px;
+  /* margin-top: 40px;
+  margin-bottom: 40px; */
 }
 
 .pt {

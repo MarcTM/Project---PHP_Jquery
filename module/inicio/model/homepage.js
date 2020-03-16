@@ -264,7 +264,7 @@ function byviews(offset) {
 
 
 ////////////////////
-//MORE VISITED
+//APIs
 ///////////////
 function apibooks(){
     $.ajax({
@@ -273,16 +273,38 @@ function apibooks(){
         url: "https://www.googleapis.com/books/v1/volumes?q=nutrition",
     })
      .done(function(data) {
-
          var api = "";
          for (var i=0; i<4; i++ ){
-            var link = data.items[i].volumeInfo.infoLink;
-            var title = data.items[i].volumeInfo.title;
-            var img = data.items[i].volumeInfo.imageLinks.smallThumbnail;
-            console.log(img);
-             api += '<div class="col-lg-4"><a href="'+link+'" target="_blank"><img class="img-responsive" src="'+img+'"/><p><b>"'+title+'"</b></p><a/></div>'
+            var check = "false";
+            var random = Math.floor(Math.random() * data.items.length) + 0;
+            if (i === 0){
+                var arr = [];
+                arr.push(random); 
+
+                var link = data.items[random].volumeInfo.infoLink;
+                var title = data.items[random].volumeInfo.title;
+                var img = data.items[random].volumeInfo.imageLinks.smallThumbnail;
+                api += '<div class="col-lg-4"><a href="'+link+'" target="_blank"><img src="'+img+'"/><p><b>"'+title+'"</b></p><a/></div>'
+            }else{
+                for (var i=0; i<arr.length; i++){
+                    if (random === arr[i]){
+                        check = "true";
+                    }
+                }
+            
+                if (check === "true"){
+                    i -= 1;
+                }else{
+                    arr.push(random);            
+
+                    var link = data.items[random].volumeInfo.infoLink;
+                    var title = data.items[random].volumeInfo.title;
+                    var img = data.items[random].volumeInfo.imageLinks.smallThumbnail;
+                    api += '<div class="col-lg-4"><a href="'+link+'" target="_blank"><img src="'+img+'"/><p><b>"'+title+'"</b></p><a/></div>'
+                }
+            }
          }
- 
+         
          $('.books').html(
              api
          );
