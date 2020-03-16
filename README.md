@@ -1,6 +1,6 @@
 # MARC PROJECT 1DAW PHP & JQUERY
 
-This is my PHP with JS/JQUERY project that I'm doing at this moment in 1DAW.
+This is my PHP with JS/JQUERY project that I'm doing at this moment.
 It consists on a supplements webpage, with its Homepage, Shop, Services, Meet Us, Contact, etc.
 
 ## Getting Started
@@ -34,11 +34,5 @@ These instructions will get you a copy of the project up and running on your loc
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
 
