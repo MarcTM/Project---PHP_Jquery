@@ -33,10 +33,11 @@
   };
 
 
+
   $(document).ready(function () {
     if(document.getElementById("mapa") != null){
       var script = document.createElement('script');
-      script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAjPEcsq5RMcnRRGGclOQJiNXgCK_pCPn8&callback=initMap";
+      script.src = "https://maps.googleapis.com/maps/api/js?key="+gMaps_apikey+"&callback=initMap";
       script.async;
       script.defer;
       document.getElementsByTagName('script')[0].parentNode.appendChild(script);

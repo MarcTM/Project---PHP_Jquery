@@ -4,7 +4,7 @@
 function call_fodemap() {
 
     var script = document.createElement('script');
-    script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAjPEcsq5RMcnRRGGclOQJiNXgCK_pCPn8&callback=fodemap";
+    script.src = "https://maps.googleapis.com/maps/api/js?key="+gMaps_apikey+"&callback=fodemap";
     script.async;
     script.defer;
     document.getElementsByTagName('script')[0].parentNode.appendChild(script);
@@ -722,13 +722,29 @@ function dellocalstorage(){
 ////////////////////
 //APIs
 ///////////////
+var get_apibooks = function() {
+    return new Promise(function(resolve, reject) {
+     $.ajax({ 
+              type: 'GET', 
+              url: "https://www.googleapis.com/books/v1/volumes?q=nutrition", 
+              dataType: 'JSON',
+          })
+          .done(function( data, textStatus, jqXHR ) {
+              resolve(data);
+          })
+          .fail(function( jqXHR, textStatus, errorThrown ) {
+              if ( console && console.log ) {
+                  console.log( "La solicitud ha fallado: " +  textStatus);
+                  reject("Error");
+              }
+          });
+    });
+}
+
+
 function apibooks(){
-    $.ajax({
-        type: "GET",
-        dataType: "JSON",
-        url: "https://www.googleapis.com/books/v1/volumes?q=nutrition",
-    })
-     .done(function(data) {
+    get_apibooks()
+    .then(function(data){
          var api = "";
          for (var i=0; i<4; i++ ){
             var check = "false";
@@ -764,11 +780,9 @@ function apibooks(){
          $('.books').html(
              api
          );
-     })
-     .fail(function( jqXHR, textStatus, errorThrown ) {
-         if ( console && console.log ) {
-             console.log( "La solicitud ha fallado: " +  textStatus);
-         }
+    })
+    .catch(function(data){
+        console.log( "La solicitud ha fallado");
     });
 }
 
