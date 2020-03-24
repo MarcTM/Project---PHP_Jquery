@@ -15,6 +15,9 @@
         "PRODUCTS CLIENT": "PRODUCTS CLIENT",
         "SERVICES": "SERVICES",
         "MEET US": "MEET US",
-        "CONTACT": "CONTACT"
+        "CONTACT": "CONTACT",
+        "LOG OUT": "LOG OUT",
+        "LOG IN": "LOG IN",
+        "REGISTER": "REGISTER"
       }
 }

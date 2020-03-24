@@ -1,3 +1,16 @@
+<div class="toplogin">
+  <div class="language">
+    <form>
+        <select name="idiom" id="idiom">
+            <option value="en" data-tr="English" id="btn-en">English</option>
+            <option value="es" data-tr="Spanish" id="btn-es">Spanish</option>
+            <option value="va" data-tr="Valencian" id="btn-va">Valencian</option>
+        </select>
+    </form>
+  </div>
+  <div class="options">Hola <?php echo $_SESSION['user']?> &nbsp;&nbsp;&nbsp; <img id="imgprofile" src="<?php echo $_SESSION['avatar'] ?>"/> &nbsp;&nbsp;&nbsp; <a id="logout_html" data-tr="LOG OUT">LOG OUT</a></div>
+</div>
+
 <div class="navbar navbar-inverse navbar-static-top">
     <div class="container">
       <div class="navbar-header">
@@ -17,17 +30,7 @@
 		      <li><a href="index.php?page=aboutus" data-tr="MEET US">MEET US</a></li>
           <li><a href="index.php?page=controller_contact&op=list" data-tr="CONTACT">CONTACT US</a></li>
         </ul>
-      </div>
-      <div class="language">
-        <form>
-            <select name="idiom" id="idiom">
-                <option value="en" data-tr="English" id="btn-en">English</option>
-                <option value="es" data-tr="Spanish" id="btn-es">Spanish</option>
-                <option value="va" data-tr="Valencian" id="btn-va">Valencian</option>
-            </select>
-        </form>
-      </div>
-      
+      </div>    
     </div>
 </div>
 <div class="navbar navbar-inverse navbar-static-top cosarara">

@@ -122,6 +122,15 @@ hr {
   padding: 0;
 }
 
+.toplogin{
+  padding-bottom: 50px;
+  padding-top: 20px;
+  padding-right: 30px;
+  padding-left: 30px;
+  background-color: #1abc9c;
+  border-color: white;
+}
+
 .navbar {
   text-transform: uppercase;
   margin-bottom: 0px;
@@ -198,6 +207,10 @@ hr {
   padding-bottom: 40px;
 }
 
+#imgprofile{
+  width: 40px;
+}
+
 #contenido2 {
   padding-top: 50px;
   width: 50%;
@@ -208,10 +221,38 @@ hr {
 margin-left: 120px;
 }
 
+#tablelogin{
+  margin-left: 410px;
+  margin-bottom: 80px;
+}
+
+#tableregister{
+  margin-left: 410px;
+  margin-bottom: 80px;
+}
+
 .filters_shop {
   margin-top: 150px;
   margin-left: 20px;
   margin-bottom: 40px;
+  float: left;
+}
+
+.loginpage{
+  text-align: center;
+  padding: 100px;
+}
+
+.registerpage{
+  text-align: center;
+  padding: 100px;
+}
+
+.options{
+  float: right;
+}
+
+.language{
   float: left;
 }
 
@@ -251,6 +292,18 @@ margin-left: 120px;
 
 .contact2 {
   padding-bottom: 40px;
+}
+
+#logout_html{
+  color: black;
+}
+
+#login_html{
+  color: black;
+}
+
+#register_html{
+  color: black;
 }
 
 
