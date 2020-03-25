@@ -229,58 +229,6 @@ function read_prod() {
 ////////////////////
 //APIs
 ///////////////
-
-// function apibooks(){
-//     $.ajax({
-//         type: "GET",
-//         dataType: "JSON",
-//         url: "https://www.googleapis.com/books/v1/volumes?q=nutrition",
-//     })
-//      .done(function(data) {
-//          var api = "";
-//          for (var i=0; i<4; i++ ){
-//             var check = "false";
-//             var random = Math.floor(Math.random() * data.items.length) + 0;
-//             if (i === 0){
-//                 var arr = [];
-//                 arr.push(random); 
-
-//                 var link = data.items[random].volumeInfo.infoLink;
-//                 var title = data.items[random].volumeInfo.title;
-//                 var img = data.items[random].volumeInfo.imageLinks.smallThumbnail;
-//                 api += '<div class="col-lg-4"><a href="'+link+'" target="_blank"><img src="'+img+'"/><p><b>"'+title+'"</b></p><a/></div>'
-//             }else{
-//                 for (var i=0; i<arr.length; i++){
-//                     if (random === arr[i]){
-//                         check = "true";
-//                     }
-//                 }
-            
-//                 if (check === "true"){
-//                     i -= 1;
-//                 }else{
-//                     arr.push(random);            
-
-//                     var link = data.items[random].volumeInfo.infoLink;
-//                     var title = data.items[random].volumeInfo.title;
-//                     var img = data.items[random].volumeInfo.imageLinks.smallThumbnail;
-//                     api += '<div class="col-lg-4"><a href="'+link+'" target="_blank"><img src="'+img+'"/><p><b>"'+title+'"</b></p><a/></div>'
-//                 }
-//             }
-//          }
-         
-//          $('.books').html(
-//              api
-//          );
-//      })
-//      .fail(function( jqXHR, textStatus, errorThrown ) {
-//          if ( console && console.log ) {
-//              console.log( "La solicitud ha fallado: " +  textStatus);
-//          }
-//     });
-// }
-
-
 var get_apibooks = function() {
     return new Promise(function(resolve, reject) {
      $.ajax({ 

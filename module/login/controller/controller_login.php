@@ -31,17 +31,15 @@
                         $_SESSION['user']=$info['user'];
                         $_SESSION['email']=$info['email'];
                         $_SESSION['avatar']=$info['avatar'];
+                        $_SESSION["time"] = time(); //Returns actual time
 
                         $callback = 'index.php?page=controller_homepage&op=list';
                         die('<script>window.location.href="'.$callback .'";</script>');
                     }	
                 }
             }
-
             include("module/login/view/login.php");
             break;
-
-
 
 
 
@@ -67,7 +65,12 @@
                     }else{
                         $info = get_object_vars($sel);
 
-                        $_SESSION = ['type'=>$info['type'], 'user'=>$info['user'], 'email'=>$info['email'], 'avatar'=>$info['avatar']];
+                        $_SESSION['type']=$info['type'];
+                        $_SESSION['user']=$info['user'];
+                        $_SESSION['email']=$info['email'];
+                        $_SESSION['avatar']=$info['avatar'];
+                        $_SESSION["time"] = time();
+
                         $callback = 'index.php?page=controller_homepage&op=list';
                         die('<script>window.location.href="'.$callback .'";</script>');
                     }	
@@ -78,12 +81,51 @@
 
 
 
-
-
         // LOGOUT
         case 'logout';
             session_destroy();
+            session_unset();
             $callback = 'index.php?page=controller_homepage&op=list';
             die('<script>window.location.href="'.$callback .'";</script>');
+            break;
+
+
+
+        //REGENERATE TIME
+        case 'regenerate_time';
+            if($_SESSION['user']){
+                $_SESSION['time'] = time();
+            }
+            break;
+
+
+        
+        //ACTIVITY
+        case 'activity';
+            if (isset($_SESSION["time"])) {
+                if((time() - $_SESSION["time"]) >= 300) { //5 minutes inactive
+                    echo "inactive"; 
+                    exit();
+                }else{
+                    echo "active";
+                    session_regenerate_id(); //Reloads/Regenerates session id every 30 seconds
+                    exit();
+                }
+            }else{
+                echo "active"; 
+            }
+            break;
+
+
+
+        //CLICKS AND MOUSE MOVEMENT
+        case 'checksession';
+            if (isset($_SESSION['user'])) {
+                echo "s";
+                exit();
+            }else{
+                echo "n";
+                exit();
+            }
             break;
     }

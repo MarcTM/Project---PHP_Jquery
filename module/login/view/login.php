@@ -17,7 +17,7 @@
             </tr>
             <hr/><br><br>
             <tr>
-                <td><font size="3">Password: </font></td> <td><input type="text" id="pass" name="pass"></td>
+                <td><font size="3">Password: </font></td> <td><input type="password" id="pass" name="pass"></td>
                 <td><font color="red">
                     <span id="e_pass" class="error">
                         <?php 

@@ -28,7 +28,8 @@
 			include("view/inc/error".$_GET['page'].".html");
 			break;
 		default;
-			include("module/inicio/view/inicio.html");
+			$callback = 'index.php?page=controller_homepage&op=list';
+			die('<script>window.location.href="'.$callback .'";</script>');
 			break;
 	}
 ?>
