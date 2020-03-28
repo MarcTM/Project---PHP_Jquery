@@ -34,7 +34,7 @@
                 }
                 echo json_encode($datainfo);
             }
-        break;
+            break;
 
         case 'countnormal';
             try{

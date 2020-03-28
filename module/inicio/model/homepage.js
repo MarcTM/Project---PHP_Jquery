@@ -160,19 +160,44 @@ function byviews(offset) {
            dataType: "JSON",
    
        })
-       .done(function(data) {  
-           var vvv="";
-           for (var i=0; i<data.length; i++ ){
-            vvv += '<div class="col-lg-4"><img class="img-responsive" id="'+data[i].idproduct+'" src="'+data[i].img+'"/><p>'+data[i].product+' - '+data[i].kg+'KG<br>'+data[i].brand+'<br>'+data[i].price+'€</p></div>'
-            }
+       .done(function(data) {//CHECK SESSION AND DRAWS FAVORITES
+            checksession() //fav.js
+            .then(function(session){
+                var vvv="";
 
-            $('.byviews').html(
-                '<div class="bx-controls-direction">'+
-                '<a class="prev2">Prev</a> | '+
-                '<a class="next2">Next</a>'+
-                '</div><br><br>'+
-                vvv
-            );
+                if(session==="no"){
+                    for (var i=0; i<data.length; i++ ){
+                        vvv += '<div class="col-lg-4"><img class="img-responsive" id="'+data[i].idproduct+'" src="'+data[i].img+'"/><img id="'+data[i].idproduct+'" class="favorites" src="view/assets/img/favorites/corazonblanco.png"/><p>'+data[i].product+' - '+data[i].kg+'KG<br>'+data[i].brand+'<br>'+data[i].price+'€</p></div>'
+                    }
+
+                    $('.byviews').html(
+                        '<div class="bx-controls-direction">'+
+                        '<a class="prev2">Prev</a> | '+
+                        '<a class="next2">Next</a>'+
+                        '</div><br><br>'+
+                        vvv
+                    );
+                }else{
+                    for (var i=0; i<data.length; i++ ){
+                        vvv += '<div class="col-lg-4"><img class="img-responsive" id="'+data[i].idproduct+'" src="'+data[i].img+'"/><img id="'+data[i].idproduct+'" class="favorites" src="view/assets/img/favorites/corazonblanco.png"/><p>'+data[i].product+' - '+data[i].kg+'KG<br>'+data[i].brand+'<br>'+data[i].price+'€</p></div>'
+                    }
+
+                    $('.byviews').html(
+                        '<div class="bx-controls-direction">'+
+                        '<a class="prev2">Prev</a> | '+
+                        '<a class="next2">Next</a>'+
+                        '</div><br><br>'+
+                        vvv
+                    );
+
+                    favuser()
+                    .then(function(data2){
+                        for(var i=0; i<data2.length; i++){
+                            $(".favorites[id="+data2[i].prod+"]").attr("src", "view/assets/img/favorites/corazonrojo.png");
+                        }
+                    })
+                }
+            });
         })
         .fail(function( jqXHR, textStatus, errorThrown ) {
             if ( console && console.log ) {

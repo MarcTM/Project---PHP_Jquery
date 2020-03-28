@@ -103,21 +103,43 @@ function ajaxForSearch(method) {
                         url:"module/shop/controller/controller_shop.php?op=fromcat&name="+cat+"&offset="+offset,
                         })
                         .done(function( data, textStatus, jqXHR ) {
-                                console.log(data);
                                 if(data.length==0 || data ==='error'){
                                     $('.centered').empty();
                                     $('<div><h3>Su búsqueda no dió resultados.</h3></div>').attr('id','list').appendTo('.centered');
                                 }else{
-                                    $('.centered').empty();
-                            
-                                    var shop="";
-                                    for (var i=0; i<data.length; i++ ){
-                                        shop += '<div class="col-lg-4"><img class="img-responsive" id="'+data[i].idproduct+'" src="'+data[i].img+'"/><p>'+data[i].product+' - '+data[i].kg+'KG<br>'+data[i].brand+'<br>'+data[i].price+'€</p></div>'
+                                    //CHECK SESSION AND DRAWS FAVORITES
+                                    checksession() //fav.js
+                                    .then(function(session){
+                                        $('.centered').empty();
+                    
+                                        var shop="";
+
+                                        if(session==="no"){
+
+                                            for (var i=0; i<data.length; i++ ){
+                                                shop += '<div class="col-lg-4"><img class="img-responsive" id="'+data[i].idproduct+'" src="'+data[i].img+'"/><img id="'+data[i].idproduct+'" class="favorites" src="view/assets/img/favorites/corazonblanco.png"/><p>'+data[i].product+' - '+data[i].kg+'KG<br>'+data[i].brand+'<br>'+data[i].price+'€</p></div>'
+                                            }
+
+                                            $('.centered').html(
+                                                shop
+                                            );
+                                        }else{
+                                            for (var i=0; i<data.length; i++ ){
+                                                shop += '<div class="col-lg-4"><img class="img-responsive" id="'+data[i].idproduct+'" src="'+data[i].img+'"/><img id="'+data[i].idproduct+'" class="favorites" src="view/assets/img/favorites/corazonblanco.png"/><p>'+data[i].product+' - '+data[i].kg+'KG<br>'+data[i].brand+'<br>'+data[i].price+'€</p></div>'
+                                            }
+
+                                            $('.centered').html(
+                                                shop
+                                            );
+
+                                            favuser()
+                                            .then(function(data2){
+                                                for(var i=0; i<data2.length; i++){
+                                                    $(".favorites[id="+data2[i].prod+"]").attr("src", "view/assets/img/favorites/corazonrojo.png");
+                                                }
+                                            })
                                         }
-                            
-                                        $('.centered').html(
-                                            shop
-                                        );
+      
             
                                         if(!localStorage.getItem('page')){
                                             var page = 1;
@@ -149,6 +171,7 @@ function ajaxForSearch(method) {
                                             e.preventDefault();
                                             ajaxForSearch("cat");
                                         });
+                                    });
                                 }
                             })
                             .fail(function( data, textStatus, jqXHR ) {
@@ -193,21 +216,43 @@ function ajaxForSearch(method) {
                         url:"module/shop/controller/controller_shop.php?op=searchbar&province="+province+"&shop="+shop+"&prod="+auto+"&offset="+offset,
                         })
                         .done(function( data, textStatus, jqXHR ) {
-                                console.log(data);
                                 if(data.length==0 || data ==='error'){
                                     $('.centered').empty();
                                     $('<div><h3>Su búsqueda no dió resultados.</h3></div>').attr('id','list').appendTo('.centered');
                                 }else{
-                                    $('.centered').empty();
-                            
-                                    var shop="";
-                                    for (var i=0; i<data.length; i++ ){
-                                        shop += '<div class="col-lg-4"><img class="img-responsive" id="'+data[i].idproduct+'" src="'+data[i].img+'"/><p>'+data[i].product+' - '+data[i].kg+'KG<br>'+data[i].brand+'<br>'+data[i].price+'€</p></div>'
+                                    //CHECK SESSION AND DRAWS FAVORITES
+                                    checksession() //fav.js
+                                    .then(function(session){
+                                        $('.centered').empty();
+                    
+                                        var shop="";
+
+                                        if(session==="no"){
+
+                                            for (var i=0; i<data.length; i++ ){
+                                                shop += '<div class="col-lg-4"><img class="img-responsive" id="'+data[i].idproduct+'" src="'+data[i].img+'"/><img id="'+data[i].idproduct+'" class="favorites" src="view/assets/img/favorites/corazonblanco.png"/><p>'+data[i].product+' - '+data[i].kg+'KG<br>'+data[i].brand+'<br>'+data[i].price+'€</p></div>'
+                                            }
+
+                                            $('.centered').html(
+                                                shop
+                                            );
+                                        }else{
+                                            for (var i=0; i<data.length; i++ ){
+                                                shop += '<div class="col-lg-4"><img class="img-responsive" id="'+data[i].idproduct+'" src="'+data[i].img+'"/><img id="'+data[i].idproduct+'" class="favorites" src="view/assets/img/favorites/corazonblanco.png"/><p>'+data[i].product+' - '+data[i].kg+'KG<br>'+data[i].brand+'<br>'+data[i].price+'€</p></div>'
+                                            }
+
+                                            $('.centered').html(
+                                                shop
+                                            );
+
+                                            favuser()
+                                            .then(function(data2){
+                                                for(var i=0; i<data2.length; i++){
+                                                    $(".favorites[id="+data2[i].prod+"]").attr("src", "view/assets/img/favorites/corazonrojo.png");
+                                                }
+                                            })
                                         }
-                            
-                                        $('.centered').html(
-                                            shop
-                                        );
+
             
                                         if(!localStorage.getItem('page')){
                                             var page = 1;
@@ -239,6 +284,7 @@ function ajaxForSearch(method) {
                                             e.preventDefault();
                                             ajaxForSearch("searchbar");
                                         });
+                                    });
                                 }
                             })
                             .fail(function( data, textStatus, jqXHR ) {
@@ -281,21 +327,42 @@ function ajaxForSearch(method) {
                         url:"module/shop/controller/controller_shop.php?op=fromcarousel&name="+car+"&offset="+offset,
                         })
                         .done(function( data, textStatus, jqXHR ) {
-                                console.log(data);
                                 if(data.length==0 || data ==='error'){
                                     $('.centered').empty();
                                     $('<div><h3>Su búsqueda no dió resultados.</h3></div>').attr('id','list').appendTo('.centered');
                                 }else{
-                                    $('.centered').empty();
-                            
-                                    var shop="";
-                                    for (var i=0; i<data.length; i++ ){
-                                        shop += '<div class="col-lg-4"><img class="img-responsive" id="'+data[i].idproduct+'" src="'+data[i].img+'"/><p>'+data[i].product+' - '+data[i].kg+'KG<br>'+data[i].brand+'<br>'+data[i].price+'€</p></div>'
+                                    //CHECK SESSION AND DRAWS FAVORITES
+                                    checksession() //fav.js
+                                    .then(function(session){
+                                        $('.centered').empty();
+                    
+                                        var shop="";
+
+                                        if(session==="no"){
+                                            for (var i=0; i<data.length; i++ ){
+                                                shop += '<div class="col-lg-4"><img class="img-responsive" id="'+data[i].idproduct+'" src="'+data[i].img+'"/><img id="'+data[i].idproduct+'" class="favorites" src="view/assets/img/favorites/corazonblanco.png"/><p>'+data[i].product+' - '+data[i].kg+'KG<br>'+data[i].brand+'<br>'+data[i].price+'€</p></div>'
+                                            }
+
+                                            $('.centered').html(
+                                                shop
+                                            );
+                                        }else{
+                                            for (var i=0; i<data.length; i++ ){
+                                                shop += '<div class="col-lg-4"><img class="img-responsive" id="'+data[i].idproduct+'" src="'+data[i].img+'"/><img id="'+data[i].idproduct+'" class="favorites" src="view/assets/img/favorites/corazonblanco.png"/><p>'+data[i].product+' - '+data[i].kg+'KG<br>'+data[i].brand+'<br>'+data[i].price+'€</p></div>'
+                                            }
+
+                                            $('.centered').html(
+                                                shop
+                                            );
+
+                                            favuser()
+                                            .then(function(data2){
+                                                for(var i=0; i<data2.length; i++){
+                                                    $(".favorites[id="+data2[i].prod+"]").attr("src", "view/assets/img/favorites/corazonrojo.png");
+                                                }
+                                            })
                                         }
-                            
-                                        $('.centered').html(
-                                            shop
-                                        );
+
             
                                         if(!localStorage.getItem('page')){
                                             var page = 1;
@@ -327,6 +394,7 @@ function ajaxForSearch(method) {
                                             e.preventDefault();
                                             ajaxForSearch("carousel");
                                         });
+                                    }); // then
                                 }
                             })
                             .fail(function( data, textStatus, jqXHR ) {
@@ -335,7 +403,7 @@ function ajaxForSearch(method) {
                 })
         break;
 
-        // NORMAL SHOP
+        // SHOP
         case "normal":
               if (!localStorage.getItem('offset')){
                 var offset = 0;
@@ -368,22 +436,43 @@ function ajaxForSearch(method) {
                         url:"module/shop/controller/controller_shop.php?op=normalshop&offset="+offset,
                         })
                         .done(function( data, textStatus, jqXHR ) {
-                                console.log(data);
                                 if(data.length==0 || data ==='error'){
                                     $('.centered').empty();
                                     $('<div><h3>Su búsqueda no dió resultados.</h3></div>').attr('id','list').appendTo('.centered');
                                 }else{
-                                    $('.centered').empty();
-                            
-                                    var shop="";
-                                    for (var i=0; i<data.length; i++ ){
-                                        shop += '<div class="col-lg-4"><img class="img-responsive" id="'+data[i].idproduct+'" src="'+data[i].img+'"/><p>'+data[i].product+' - '+data[i].kg+'KG<br>'+data[i].brand+'<br>'+data[i].price+'€</p></div>'
+                                    //CHECK SESSION AND DRAWS FAVORITES
+                                    checksession() //fav.js
+                                    .then(function(session){
+                                        $('.centered').empty();
+                    
+                                        var shop="";
+
+                                        if(session==="no"){
+                                            for (var i=0; i<data.length; i++ ){
+                                                shop += '<div class="col-lg-4"><img class="img-responsive" id="'+data[i].idproduct+'" src="'+data[i].img+'"/><img id="'+data[i].idproduct+'" class="favorites" src="view/assets/img/favorites/corazonblanco.png"/><p>'+data[i].product+' - '+data[i].kg+'KG<br>'+data[i].brand+'<br>'+data[i].price+'€</p></div>'
+                                            }
+
+                                            $('.centered').html(
+                                                shop
+                                            );
+                                        }else{
+                                            for (var i=0; i<data.length; i++ ){
+                                                shop += '<div class="col-lg-4"><img class="img-responsive" id="'+data[i].idproduct+'" src="'+data[i].img+'"/><img id="'+data[i].idproduct+'" class="favorites" src="view/assets/img/favorites/corazonblanco.png"/><p>'+data[i].product+' - '+data[i].kg+'KG<br>'+data[i].brand+'<br>'+data[i].price+'€</p></div>'
+                                            }
+
+                                            $('.centered').html(
+                                                shop
+                                            );
+
+                                            favuser()
+                                            .then(function(data2){
+                                                for(var i=0; i<data2.length; i++){
+                                                    $(".favorites[id="+data2[i].prod+"]").attr("src", "view/assets/img/favorites/corazonrojo.png");
+                                                }
+                                            })
                                         }
-                            
-                                        $('.centered').html(
-                                            shop
-                                        );
-                            
+
+        
                                         if(!localStorage.getItem('page')){
                                             var page = 1;
                                         }else{
@@ -399,7 +488,6 @@ function ajaxForSearch(method) {
                                         }).on("page", function (e, num) {
                                             page = num;
                                             localStorage.setItem('page', page);
-                                            console.log(num);
                                             if (num == 1){
                                                 offset = 0;
                                                 localStorage.setItem('offset', offset)
@@ -414,10 +502,8 @@ function ajaxForSearch(method) {
                                             e.preventDefault();
                                             ajaxForSearch("normal");
                                         });
+                                    })
                                 }
-                            })
-                            .fail(function( data, textStatus, jqXHR ) {
-                                console.log("FAIL: "+data);
                             })
                 })
 
@@ -793,7 +879,7 @@ function apibooks(){
 
 
 $(document).ready(function () {
-
+    
     call_fodemap();
     redirect_page();
     read_prod();

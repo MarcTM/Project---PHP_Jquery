@@ -6,6 +6,19 @@
     
     switch($_GET['op']){
 
+        //CHECK SESSION
+        case 'check_session';
+            if ($_SESSION['user']){
+                echo "yes";
+                exit();
+            }else{
+                echo "no";
+                exit();
+            }
+            break;
+
+
+
         // LIST LOGIN
         case 'list_login';
             include("module/login/model/validate_login.php");

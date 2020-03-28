@@ -72,6 +72,7 @@ p {
 
 .col-lg-4 {
   width: 23%;
+  position:relative;
 }
 
 .col-lg-4:hover {
@@ -193,6 +194,18 @@ hr {
 
 .cosarara {
   padding-left: 400px;
+}
+
+#favorites{
+  position: relative;
+}
+
+.favorites {
+  position:absolute;
+  top:20px;
+  right:40px;
+  border:none;
+  width: 55px;
 }
 
 #searchlist {
