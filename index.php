@@ -8,6 +8,9 @@
 			case "controller_shop";
 				include("view/inc/top/top_page_shop.html");
 				break;
+			case "controller_cart";
+				include("view/inc/top/top_page_cart.html");
+				break;
 			case "controller_details";
 				include("view/inc/top/top_page_details.html");
 				break;

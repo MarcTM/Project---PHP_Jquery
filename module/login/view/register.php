@@ -43,5 +43,7 @@
 
         </table>
     </form>
+    Already registered? <a href="index.php?page=controller_login&op=list_login">Login here</a>
+
 
 </div>

@@ -28,10 +28,12 @@
             </tr>
 
             <tr>
-                <td><input type="button" name="log_in" id="log_in" value="LOG IN" onclick="validate_login()"/></td>
+                <td><input type="button" name="log_in" id="log_in" value="LOG IN" onclick="validate_login()"/> </td>
             </tr>
 
         </table>
     </form>
+    Still not registered? <a href="index.php?page=controller_login&op=list_register">Register here</a>
+
 
 </div>

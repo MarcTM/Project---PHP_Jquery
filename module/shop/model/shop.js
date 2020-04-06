@@ -117,7 +117,7 @@ function ajaxForSearch(method) {
                                         if(session==="no"){
 
                                             for (var i=0; i<data.length; i++ ){
-                                                shop += '<div class="col-lg-4"><img class="img-responsive" id="'+data[i].idproduct+'" src="'+data[i].img+'"/><img id="'+data[i].idproduct+'" class="favorites" src="view/assets/img/favorites/corazonblanco.png"/><p>'+data[i].product+' - '+data[i].kg+'KG<br>'+data[i].brand+'<br>'+data[i].price+'€</p></div>'
+                                                shop += '<div class="col-lg-4"><img class="img-responsive" id="'+data[i].idproduct+'" src="'+data[i].img+'"/><img id="'+data[i].idproduct+'" class="favorites" src="view/assets/img/favorites/corazonblanco.png"/><p>'+data[i].product+' - '+data[i].kg+'KG<br>'+data[i].brand+'<br>'+data[i].price+'€</p><input type="button" class="addtocart" name="addtocart" id="'+data[i].idproduct+'" value="ADD TO CART"/></div>'
                                             }
 
                                             $('.centered').html(
@@ -125,7 +125,7 @@ function ajaxForSearch(method) {
                                             );
                                         }else{
                                             for (var i=0; i<data.length; i++ ){
-                                                shop += '<div class="col-lg-4"><img class="img-responsive" id="'+data[i].idproduct+'" src="'+data[i].img+'"/><img id="'+data[i].idproduct+'" class="favorites" src="view/assets/img/favorites/corazonblanco.png"/><p>'+data[i].product+' - '+data[i].kg+'KG<br>'+data[i].brand+'<br>'+data[i].price+'€</p></div>'
+                                                shop += '<div class="col-lg-4"><img class="img-responsive" id="'+data[i].idproduct+'" src="'+data[i].img+'"/><img id="'+data[i].idproduct+'" class="favorites" src="view/assets/img/favorites/corazonblanco.png"/><p>'+data[i].product+' - '+data[i].kg+'KG<br>'+data[i].brand+'<br>'+data[i].price+'€</p><input type="button" class="addtocart" name="addtocart" id="'+data[i].idproduct+'" value="ADD TO CART"/></div>'
                                             }
 
                                             $('.centered').html(
@@ -230,7 +230,7 @@ function ajaxForSearch(method) {
                                         if(session==="no"){
 
                                             for (var i=0; i<data.length; i++ ){
-                                                shop += '<div class="col-lg-4"><img class="img-responsive" id="'+data[i].idproduct+'" src="'+data[i].img+'"/><img id="'+data[i].idproduct+'" class="favorites" src="view/assets/img/favorites/corazonblanco.png"/><p>'+data[i].product+' - '+data[i].kg+'KG<br>'+data[i].brand+'<br>'+data[i].price+'€</p></div>'
+                                                shop += '<div class="col-lg-4"><img class="img-responsive" id="'+data[i].idproduct+'" src="'+data[i].img+'"/><img id="'+data[i].idproduct+'" class="favorites" src="view/assets/img/favorites/corazonblanco.png"/><p>'+data[i].product+' - '+data[i].kg+'KG<br>'+data[i].brand+'<br>'+data[i].price+'€</p><input type="button" class="addtocart" name="addtocart" id="'+data[i].idproduct+'" value="ADD TO CART"/></div>'
                                             }
 
                                             $('.centered').html(
@@ -238,7 +238,7 @@ function ajaxForSearch(method) {
                                             );
                                         }else{
                                             for (var i=0; i<data.length; i++ ){
-                                                shop += '<div class="col-lg-4"><img class="img-responsive" id="'+data[i].idproduct+'" src="'+data[i].img+'"/><img id="'+data[i].idproduct+'" class="favorites" src="view/assets/img/favorites/corazonblanco.png"/><p>'+data[i].product+' - '+data[i].kg+'KG<br>'+data[i].brand+'<br>'+data[i].price+'€</p></div>'
+                                                shop += '<div class="col-lg-4"><img class="img-responsive" id="'+data[i].idproduct+'" src="'+data[i].img+'"/><img id="'+data[i].idproduct+'" class="favorites" src="view/assets/img/favorites/corazonblanco.png"/><p>'+data[i].product+' - '+data[i].kg+'KG<br>'+data[i].brand+'<br>'+data[i].price+'€</p><input type="button" class="addtocart" name="addtocart" id="'+data[i].idproduct+'" value="ADD TO CART"/></div>'
                                             }
 
                                             $('.centered').html(
@@ -340,7 +340,7 @@ function ajaxForSearch(method) {
 
                                         if(session==="no"){
                                             for (var i=0; i<data.length; i++ ){
-                                                shop += '<div class="col-lg-4"><img class="img-responsive" id="'+data[i].idproduct+'" src="'+data[i].img+'"/><img id="'+data[i].idproduct+'" class="favorites" src="view/assets/img/favorites/corazonblanco.png"/><p>'+data[i].product+' - '+data[i].kg+'KG<br>'+data[i].brand+'<br>'+data[i].price+'€</p></div>'
+                                                shop += '<div class="col-lg-4"><img class="img-responsive" id="'+data[i].idproduct+'" src="'+data[i].img+'"/><img id="'+data[i].idproduct+'" class="favorites" src="view/assets/img/favorites/corazonblanco.png"/><p>'+data[i].product+' - '+data[i].kg+'KG<br>'+data[i].brand+'<br>'+data[i].price+'€</p><input type="button" class="addtocart" name="addtocart" id="'+data[i].idproduct+'" value="ADD TO CART"/></div>'
                                             }
 
                                             $('.centered').html(
@@ -348,7 +348,7 @@ function ajaxForSearch(method) {
                                             );
                                         }else{
                                             for (var i=0; i<data.length; i++ ){
-                                                shop += '<div class="col-lg-4"><img class="img-responsive" id="'+data[i].idproduct+'" src="'+data[i].img+'"/><img id="'+data[i].idproduct+'" class="favorites" src="view/assets/img/favorites/corazonblanco.png"/><p>'+data[i].product+' - '+data[i].kg+'KG<br>'+data[i].brand+'<br>'+data[i].price+'€</p></div>'
+                                                shop += '<div class="col-lg-4"><img class="img-responsive" id="'+data[i].idproduct+'" src="'+data[i].img+'"/><img id="'+data[i].idproduct+'" class="favorites" src="view/assets/img/favorites/corazonblanco.png"/><p>'+data[i].product+' - '+data[i].kg+'KG<br>'+data[i].brand+'<br>'+data[i].price+'€</p><input type="button" class="addtocart" name="addtocart" id="'+data[i].idproduct+'" value="ADD TO CART"/></div>'
                                             }
 
                                             $('.centered').html(
@@ -449,7 +449,7 @@ function ajaxForSearch(method) {
 
                                         if(session==="no"){
                                             for (var i=0; i<data.length; i++ ){
-                                                shop += '<div class="col-lg-4"><img class="img-responsive" id="'+data[i].idproduct+'" src="'+data[i].img+'"/><img id="'+data[i].idproduct+'" class="favorites" src="view/assets/img/favorites/corazonblanco.png"/><p>'+data[i].product+' - '+data[i].kg+'KG<br>'+data[i].brand+'<br>'+data[i].price+'€</p></div>'
+                                                shop += '<div class="col-lg-4"><img class="img-responsive" id="'+data[i].idproduct+'" src="'+data[i].img+'"/><img id="'+data[i].idproduct+'" class="favorites" src="view/assets/img/favorites/corazonblanco.png"/><p>'+data[i].product+' - '+data[i].kg+'KG<br>'+data[i].brand+'<br>'+data[i].price+'€</p><input type="button" class="addtocart" name="addtocart" id="'+data[i].idproduct+'" value="ADD TO CART"/></div>'
                                             }
 
                                             $('.centered').html(
@@ -457,7 +457,7 @@ function ajaxForSearch(method) {
                                             );
                                         }else{
                                             for (var i=0; i<data.length; i++ ){
-                                                shop += '<div class="col-lg-4"><img class="img-responsive" id="'+data[i].idproduct+'" src="'+data[i].img+'"/><img id="'+data[i].idproduct+'" class="favorites" src="view/assets/img/favorites/corazonblanco.png"/><p>'+data[i].product+' - '+data[i].kg+'KG<br>'+data[i].brand+'<br>'+data[i].price+'€</p></div>'
+                                                shop += '<div class="col-lg-4"><img class="img-responsive" id="'+data[i].idproduct+'" src="'+data[i].img+'"/><img id="'+data[i].idproduct+'" class="favorites" src="view/assets/img/favorites/corazonblanco.png"/><p>'+data[i].product+' - '+data[i].kg+'KG<br>'+data[i].brand+'<br>'+data[i].price+'€</p><input type="button" class="addtocart" name="addtocart" id="'+data[i].idproduct+'" value="ADD TO CART"/></div>'
                                             }
 
                                             $('.centered').html(

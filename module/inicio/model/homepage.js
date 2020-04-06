@@ -167,7 +167,7 @@ function byviews(offset) {
 
                 if(session==="no"){
                     for (var i=0; i<data.length; i++ ){
-                        vvv += '<div class="col-lg-4"><img class="img-responsive" id="'+data[i].idproduct+'" src="'+data[i].img+'"/><img id="'+data[i].idproduct+'" class="favorites" src="view/assets/img/favorites/corazonblanco.png"/><p>'+data[i].product+' - '+data[i].kg+'KG<br>'+data[i].brand+'<br>'+data[i].price+'€</p></div>'
+                        vvv += '<div class="col-lg-4"><img class="img-responsive" id="'+data[i].idproduct+'" src="'+data[i].img+'"/><img id="'+data[i].idproduct+'" class="favorites" src="view/assets/img/favorites/corazonblanco.png"/><p>'+data[i].product+' - '+data[i].kg+'KG<br>'+data[i].brand+'<br>'+data[i].price+'€</p><input type="button" class="addtocart" name="addtocart" id="'+data[i].idproduct+'" value="ADD TO CART"/></div>'
                     }
 
                     $('.byviews').html(
@@ -179,7 +179,7 @@ function byviews(offset) {
                     );
                 }else{
                     for (var i=0; i<data.length; i++ ){
-                        vvv += '<div class="col-lg-4"><img class="img-responsive" id="'+data[i].idproduct+'" src="'+data[i].img+'"/><img id="'+data[i].idproduct+'" class="favorites" src="view/assets/img/favorites/corazonblanco.png"/><p>'+data[i].product+' - '+data[i].kg+'KG<br>'+data[i].brand+'<br>'+data[i].price+'€</p></div>'
+                        vvv += '<div class="col-lg-4"><img class="img-responsive" id="'+data[i].idproduct+'" src="'+data[i].img+'"/><img id="'+data[i].idproduct+'" class="favorites" src="view/assets/img/favorites/corazonblanco.png"/><p>'+data[i].product+' - '+data[i].kg+'KG<br>'+data[i].brand+'<br>'+data[i].price+'€</p><input type="button" class="addtocart" name="addtocart" id="'+data[i].idproduct+'" value="ADD TO CART"/></div>'
                     }
 
                     $('.byviews').html(

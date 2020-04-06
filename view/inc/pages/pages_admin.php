@@ -9,6 +9,9 @@
 		case "controller_shop";
 			include("module/shop/controller/".$_GET['page'].".php");
 			break;
+		case "controller_cart";
+			include("module/cart/controller/".$_GET['page'].".php");
+			break;
 		case "controller_details";
 			include("module/details/controller/".$_GET['page'].".php");
 			break;
