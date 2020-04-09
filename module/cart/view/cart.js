@@ -17,7 +17,7 @@ var logincart = function() {
 
 
 ////////////////////
-///ADD TO CART (AND CHECK IF ALREADY EXISTS)
+///ADD TO CART
 //////////////////////
 var addselected = function(id) {
     return new Promise(function(resolve) {
@@ -53,9 +53,36 @@ function tocart(){
             }else{
 // ADD TO LOCALSTORAGE(USER NOT LOGED)
                 if(!localStorage.getItem('cart')){
-                    console.log("Not yet");
+                    var arrcart = [];
+                    var objcart = {id: id, quantity: 1};
+
+                    arrcart.push(objcart);
+
+                    var JSONcart = JSON.stringify(arrcart);
+                    localStorage.setItem('cart', JSONcart);
+
+                    alert("PRODUCT ADDED TO CART");
                 }else{
-                    console.log("Already exists");
+                    var repeat = "false";
+                    var arrcart = JSON.parse(localStorage['cart']);
+
+                    for(var i=0; i<arrcart.length; i++){
+                        if(arrcart[i].id===id){
+                            repeat="true";
+                        }
+                    }
+
+                    if(repeat==="true"){
+                        alert("YOU ALREADY HAVE THIS PRODUCT IN YOUR CART");
+                    }else{
+                        var objcart = {id: id, quantity: 1};
+                        arrcart.push(objcart);
+
+                        var JSONcart = JSON.stringify(arrcart);
+                        localStorage.setItem('cart', JSONcart);
+
+                        alert("PRODUCT ADDED TO CART");
+                    }
                 }
             }
         })

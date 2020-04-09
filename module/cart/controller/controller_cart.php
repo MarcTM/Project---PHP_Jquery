@@ -12,6 +12,30 @@
 
 
 
+
+    case 'localdb':
+        try{
+            $daocart = new DAOCart();
+            $rdo = $daocart->check_prod($_GET['id']);
+        }catch (Exception $e){
+            echo json_encode("error");
+            exit;
+        }
+
+        if(!$rdo){
+            $add = $daocart->add_prod($_GET['id']);
+            echo json_encode("not exists");
+            exit;
+        }else{
+            $final = get_object_vars($rdo);
+            echo json_encode($final);
+            exit;
+        }
+        break;
+
+
+
+
     case 'logincart':
         if($_SESSION['type']){
             echo "true";
@@ -68,6 +92,28 @@
             exit;
         }
         break;
+
+
+
+    case 'showlocalcart':
+            try{
+                $daocart = new DAOCart();
+                $rdo = $daocart->show_localprod($_GET['id']);
+            }catch (Exception $e){
+                echo json_encode("error");
+                exit;
+            }
+    
+            if(!$rdo){
+                echo json_encode("error");
+                exit;
+            }else{
+                $final = get_object_vars($rdo);
+                echo json_encode($final);
+                exit;
+            }
+            break;
+
 
 
 

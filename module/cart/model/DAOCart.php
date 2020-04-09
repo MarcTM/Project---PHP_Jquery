@@ -54,6 +54,22 @@
 
 
 
+		function show_localprod($id){
+            $sql = "SELECT p.idproduct, p.product, p.flavour, p.brand, p.kg, p.datecaducity, p.img, p.price FROM products p WHERE p.idproduct = '$id'";
+            
+            $conexion = connect::con();
+
+			$qu = $conexion->prepare($sql);
+			$qu->execute();
+			$res = $qu->fetchObject();
+			
+			connect::close($conexion);
+
+			return $res;
+		}
+
+
+
 
 		function delete($id){
 			$email = $_SESSION['email'];
@@ -88,12 +104,16 @@
 		function checkout(){
 			$email = $_SESSION['email'];
 
-			$sql = "DELETE FROM cart WHERE email = '$email'";
+			$sql1 = "INSERT INTO checkout SELECT * FROM cart c, (SELECT NOW() day) day WHERE c.email='$email'";
+			$sql2 = "DELETE FROM cart WHERE email = '$email'";
 
 			$conexion = connect::con();
 
-			$qu = $conexion->prepare($sql);
-			$qu->execute();
+			$qu1 = $conexion->prepare($sql1);
+			$qu1->execute();
+
+			$qu2 = $conexion->prepare($sql2);
+			$qu2->execute();
 			
 			connect::close($conexion);
 		}

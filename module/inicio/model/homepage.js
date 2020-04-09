@@ -1,4 +1,60 @@
 
+////////////////////
+///CHECK IF USER IS LOGED
+//////////////////////
+var logedornot = function() {
+    return new Promise(function(resolve) {
+        $.ajax({
+            type: "GET",
+            url: "module/cart/controller/controller_cart.php?op=logincart",
+        })
+          .done(function( loged, textStatus, jqXHR ) {
+              resolve(loged);
+          })
+    });
+}
+
+
+
+
+////////////////////
+///LOCAL TO DB
+//////////////////////
+var localtodb = function(id) {
+    return new Promise(function(resolve) {
+        $.ajax({
+            type: "GET",
+            url: "module/cart/controller/controller_cart.php?op=localdb&id="+id,
+        })
+    });
+}
+
+
+
+
+/////////////////
+/////PUT LOCALSTORAGE (if exists) INTO DB (if user is loged)
+/////////////////////
+function fromlocaltodb(){
+    if(localStorage.getItem('cart')){
+        logedornot()
+        .then(function(loged){
+            if(loged==="true"){
+                var JSONcart = JSON.parse(localStorage.getItem('cart'));
+
+                for(var i=0; i<JSONcart.length; i++){
+                    localtodb(JSONcart[i].id)
+                }
+                localStorage.removeItem('cart');
+                localStorage.removeItem('cart2');
+            }
+        })
+    }
+}
+
+
+
+
 ////////////////
 //CAROUSEL
 //////////
@@ -340,6 +396,7 @@ function dellocalstorage(){
 
 $(document).ready(function () {
 
+    fromlocaltodb();
     carousel();
     click_carousel()
     category();

@@ -46,6 +46,48 @@
                         $_SESSION['avatar']=$info['avatar'];
                         $_SESSION["time"] = time(); //Returns actual time
 
+                        if($_GET['purch'] || $_GET['needlogin']){
+                            $callback = 'index.php?page=controller_cart&op=list';
+
+                        }else{
+                            $callback = 'index.php?page=controller_homepage&op=list';
+
+                        }
+                        die('<script>window.location.href="'.$callback .'";</script>');
+                    }	
+                }
+            }
+            include("module/login/view/login.php");
+            break;
+
+
+
+        case 'list_login_purch';
+            include("module/login/model/validate_login.php");
+
+            if ($_POST){
+                $check = validate_login();
+ 
+                if($check['check']){
+                    try {
+                        $daologin = new DAOLogin();
+                        $sel = $daologin->select_user($_POST['email']);
+                    } catch (Exception $e) {
+                        echo "Error at logging in";
+                        exit();
+                    }
+                    if(!$sel){
+                        echo "Error at logging in";
+                        exit();
+                    }else{
+                        $info = get_object_vars($sel);
+
+                        $_SESSION['type']=$info['type'];
+                        $_SESSION['user']=$info['user'];
+                        $_SESSION['email']=$info['email'];
+                        $_SESSION['avatar']=$info['avatar'];
+                        $_SESSION["time"] = time(); //Returns actual time
+
                         $callback = 'index.php?page=controller_homepage&op=list';
                         die('<script>window.location.href="'.$callback .'";</script>');
                     }	
