@@ -1,7 +1,7 @@
 # MARC PROJECT 1DAW PHP & JQUERY
 
 This is my PHP with JS/JQUERY project that I'm doing at this moment.
-It consists on a supplements webpage, with its Homepage, Shop, Services, Meet Us, Contact, etc.
+It consists on a Supplements page, with a Homepage, Shop, Services, Meet Us, Contact, and Login (login, register, and recover_password).
 
 ## Getting Started
 
