@@ -27,8 +27,3 @@ These instructions will get you a copy of the project up and running on your loc
 ## Authors
 
 * **Marc Torres** - *Developer of the webpage*
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
-
